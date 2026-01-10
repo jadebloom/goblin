@@ -29,7 +29,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+/.angular
 .sass-cache/
 /connect.lock
 /coverage
@@ -43,5 +43,6 @@ __screenshots__/
 Thumbs.db
 
 # Goblin
+/project
 CHANGELOG.md
 README.md
