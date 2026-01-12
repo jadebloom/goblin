@@ -8,4 +8,4 @@ import { MatIconModule } from '@angular/material/icon';
 	templateUrl: './index.html',
 	styleUrl: './index.scss',
 })
-export default class NotFoundPage {}
+export class NotFoundPage {}
