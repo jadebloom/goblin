@@ -1,0 +1,24 @@
+section.page {
+	height: 100%;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	text-align: center;
+
+	.code {
+		font-size: 2.5rem;
+		font-weight: 600;
+	}
+
+	h1 {
+		font-size: 1rem;
+	}
+
+	span {
+		font-weight: 600;
+		color: var(--mat-sys-secondary);
+	}
+}
