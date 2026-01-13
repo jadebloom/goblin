@@ -1,12 +1,18 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+	ApplicationConfig,
+	inject,
+	provideAppInitializer,
+	provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { definePreset } from '@primeuix/themes';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
+import { ThemeService } from '@core/theme/services/theme.service';
 
-const Noir = definePreset(Aura, {
+const Goblin = definePreset(Aura, {
 	semantic: {
 		primary: {
 			50: '{zinc.50}',
@@ -23,12 +29,6 @@ const Noir = definePreset(Aura, {
 		},
 		colorScheme: {
 			light: {
-				tmp: {
-					color: '{yellow.500}',
-					background: '{zinc.950}',
-					focusBackground: '{zinc.700}',
-					focusColor: '#ffffff',
-				},
 				primary: {
 					color: '{zinc.900}',
 					inverseColor: '#ffffff',
@@ -43,12 +43,6 @@ const Noir = definePreset(Aura, {
 				},
 			},
 			dark: {
-				tmp: {
-					color: '{red.500}',
-					background: '{zinc.950}',
-					focusBackground: '{zinc.700}',
-					focusColor: '#ffffff',
-				},
 				primary: {
 					color: '{zinc.50}',
 					inverseColor: '{zinc.950}',
@@ -73,11 +67,16 @@ export const appConfig: ApplicationConfig = {
 		provideClientHydration(withEventReplay()),
 		providePrimeNG({
 			theme: {
-				preset: Noir,
+				preset: Goblin,
 				options: {
 					darkModeSelector: '.gb-app-dark',
 				},
 			},
+		}),
+		provideAppInitializer(() => {
+			const themeService = inject(ThemeService);
+
+			themeService.loadTheme();
 		}),
 	],
 };
