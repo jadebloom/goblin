@@ -4,7 +4,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 ### Added
-- For new features.
+- Added the not-found page.
+- Added registration page with logic.
 ### Changed
 - For changes in existing functionality.
 ### Deprecated
