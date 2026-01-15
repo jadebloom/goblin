@@ -1,13 +1,13 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Theme } from '@core/theme/models/theme';
 import { BehaviorSubject, fromEventPattern, map, startWith } from 'rxjs';
+import { Theme } from '@core/theme/models/theme.model';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-	platformId = inject(PLATFORM_ID);
+	private readonly platformId = inject(PLATFORM_ID);
 
-	private _theme$ = new BehaviorSubject<Theme>(Theme.DARK);
+	private readonly _theme$ = new BehaviorSubject<Theme>(Theme.DARK);
 
 	loadTheme(): Promise<void> {
 		return new Promise(() => {

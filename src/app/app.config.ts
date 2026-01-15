@@ -5,12 +5,20 @@ import {
 	provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import {
+	HTTP_INTERCEPTORS,
+	provideHttpClient,
+	withFetch,
+	withInterceptorsFromDi,
+} from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { definePreset } from '@primeuix/themes';
 import { providePrimeNG } from 'primeng/config';
+import { MessageService } from 'primeng/api';
+import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
+import { AuthInterceptor } from '@core/auth/interceptors/auth.interceptor';
 import { routes } from './app.routes';
-import { ThemeService } from '@core/theme/services/theme.service';
+import { StartupService } from '@core/startup/startup.service';
 
 const Goblin = definePreset(Aura, {
 	semantic: {
@@ -74,9 +82,12 @@ export const appConfig: ApplicationConfig = {
 			},
 		}),
 		provideAppInitializer(() => {
-			const themeService = inject(ThemeService);
+			const startUp = inject(StartupService);
 
-			themeService.loadTheme();
+			startUp.startUp();
 		}),
+		provideHttpClient(withFetch(), withInterceptorsFromDi()),
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+		MessageService,
 	],
 };
