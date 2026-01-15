@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ## [Unreleased]
 ### Added
 - Added the not-found page.
-- Added registration page with logic.
+- Added registration page with registration logic.
 ### Changed
 - For changes in existing functionality.
 ### Deprecated

@@ -1,0 +1,21 @@
+import { inject, Injectable, signal } from '@angular/core';
+import { ThemeService } from '@core/theme/services/theme.service';
+import { AuthService } from '@core/auth/services/auth.service';
+
+@Injectable({ providedIn: 'root' })
+export class StartupService {
+	private readonly theme = inject(ThemeService);
+	private readonly auth = inject(AuthService);
+
+	private readonly _isStartupFinished = signal(false);
+	readonly isStartupFinished = this._isStartupFinished.asReadonly();
+
+	startUp() {
+		this.theme.loadTheme();
+
+		this.auth.refresh().subscribe({
+			next: () => this._isStartupFinished.set(true),
+			error: () => this._isStartupFinished.set(true),
+		});
+	}
+}

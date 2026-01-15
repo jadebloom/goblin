@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="register()">
+	<gb-auth-email-input [email]="email()" />
+
+	<gb-auth-password-input [password]="password()" />
+
+	<p-button type="submit" label="Register" />
+</form>
