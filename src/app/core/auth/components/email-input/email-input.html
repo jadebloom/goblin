@@ -14,13 +14,5 @@
 
 	<small id="email-help">Enter your email with 1 - 64 characters.</small>
 
-	@if ((email().touched || email().dirty) && email().hasError('required')) {
-		<p-message severity="error" size="small" variant="simple">Email is required.</p-message>
-	}
-
-	@if ((email().touched || email().dirty) && email().hasError('email')) {
-		<p-message severity="error" size="small" variant="simple">
-			Email should be a valid email address.
-		</p-message>
-	}
+	<ng-content select="[errors]"></ng-content>
 </div>
