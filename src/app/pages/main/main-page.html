@@ -1,1 +1,17 @@
-<p>main</p>
+<section class="page">
+	<header>
+		<gb-toolkit-nav-drawer />
+
+		<div>
+			<button type="button" class="account-button" (click)="op.toggle($event)">
+				<p-avatar label="U" shape="circle" />
+			</button>
+
+			<p-popover #op>
+				<gb-account-avatar-popup />
+			</p-popover>
+		</div>
+	</header>
+
+	<p>Main page is here</p>
+</section>
