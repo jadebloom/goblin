@@ -40,5 +40,11 @@
 		</ng-container>
 	</gb-auth-password-input>
 
-	<p-button type="submit" label="Login" />
+	<p-button
+		label="Login"
+		type="submit"
+		icon="pi pi-sign-in"
+		rounded="true"
+		[loading]="form.auth.isLoginLoading()"
+	/>
 </form>

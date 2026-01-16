@@ -72,7 +72,7 @@ export class AuthService {
 
 					return throwError(() => err);
 				}),
-				finalize(() => this.isRegistrationLoading.set(false)),
+				finalize(() => this.isLoginLoading.set(false)),
 			);
 	}
 
