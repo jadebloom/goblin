@@ -1,10 +1,11 @@
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, finalize, map, Observable, of, take, throwError } from 'rxjs';
 import { AuthResponse } from '@core/auth/models/auth-response.model';
 import { AuthStatus } from '@core/auth/models/auth-status.model';
 import { RegistrationPayload } from '@core/auth/models/registration-payload.model';
+import { LoginPayload } from '@core/auth/models/login-payload.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
 	readonly isAuthenticated$ = this.authStateSubject.asObservable();
 
 	readonly isRegistrationLoading = signal(false);
+	readonly isLoginLoading = signal(false);
 
 	register(form: RegistrationPayload): Observable<AuthResponse> {
 		this.authStateSubject.next(AuthStatus.LOADING);
@@ -45,11 +47,36 @@ export class AuthService {
 			);
 	}
 
-	refresh(): Observable<AuthStatus> {
-		if (isPlatformServer(this.platformId)) {
-			return of(this.authStateSubject.getValue());
-		}
+	login(form: LoginPayload): Observable<AuthResponse> {
+		this.authStateSubject.next(AuthStatus.LOADING);
+		this.isLoginLoading.set(true);
 
+		return this.http
+			.post<AuthResponse>('/api/v1/authentication/login', form, {
+				withCredentials: true,
+			})
+			.pipe(
+				map((res) => {
+					if (res.access_token) {
+						localStorage.setItem('access_token', res.access_token);
+
+						this.authStateSubject.next(AuthStatus.AUTHENTICATED);
+					} else {
+						this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
+					}
+
+					return res;
+				}),
+				catchError((err) => {
+					this.cleanUp();
+
+					return throwError(() => err);
+				}),
+				finalize(() => this.isRegistrationLoading.set(false)),
+			);
+	}
+
+	refresh(): Observable<AuthStatus> {
 		if (this.authStateSubject.getValue() == AuthStatus.LOADING) {
 			return of(AuthStatus.LOADING);
 		}

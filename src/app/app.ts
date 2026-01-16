@@ -14,7 +14,9 @@ import { StartupService } from '@core/startup/startup.service';
 			@if (startUp.isStartupFinished()) {
 				<router-outlet />
 			} @else {
-				<p-progress-spinner ariaLabel="App is starting up..." />
+				<div class="app-shell-loading-container">
+					<p-progress-spinner ariaLabel="App is starting up..." />
+				</div>
 			}
 		</main>
 	`,
