@@ -9,7 +9,11 @@ import { StartupService } from '@core/startup/startup.service';
 	imports: [RouterOutlet, ToastModule, ProgressSpinnerModule],
 	template: `
 		<main class="app-shell">
-			<p-toast key="tc" position="top-center" />
+			<p-toast
+				key="tc"
+				position="top-center"
+				[breakpoints]="{ '920px': { width: '90%', right: 'auto' } }"
+			/>
 
 			@if (startUp.isStartupFinished()) {
 				<router-outlet />
