@@ -1,7 +1,83 @@
-<form [formGroup]="form" (ngSubmit)="register()">
-	<gb-auth-email-input [email]="email()" />
+<form [formGroup]="form.form" (ngSubmit)="form.register()">
+	<gb-auth-email-input [email]="form.email()">
+		<ng-container errors>
+			@if ((form.email().touched || form.email().dirty) && form.email().hasError('required')) {
+				<p-message severity="error" size="small" variant="simple">Email is required.</p-message>
+			}
 
-	<gb-auth-password-input [password]="password()" />
+			@if ((form.email().touched || form.email().dirty) && form.email().hasError('email')) {
+				<p-message severity="error" size="small" variant="simple">
+					Email should be a valid email address.
+				</p-message>
+			}
+		</ng-container>
+	</gb-auth-email-input>
 
-	<p-button type="submit" label="Register" />
+	<gb-auth-password-input [password]="form.password()">
+		<ng-container errors>
+			@if (
+				(form.password().touched || form.password().dirty) && form.password().hasError('required')
+			) {
+				<p-message severity="error" size="small" variant="simple">Password is required.</p-message>
+			}
+
+			@if (
+				(form.password().touched || form.password().dirty) && form.password().hasError('minlength')
+			) {
+				<p-message severity="error" size="small" variant="simple"
+					>Password should contain at least 8 characters.
+				</p-message>
+			}
+
+			@if (
+				(form.password().touched || form.password().dirty) && form.password().hasError('pattern')
+			) {
+				<p-message severity="error" size="small" variant="simple">
+					Password should contain at least one: uppercase letter, lowercase letter, number and
+					special symbol ('!', '?', '_', '$', '#', '%', '^', '&', '*').
+				</p-message>
+			}
+		</ng-container>
+	</gb-auth-password-input>
+
+	<gb-auth-password-input name="rePassword" [password]="form.rePassword()" label="Confirm password">
+		<ng-container errors>
+			@if (
+				(form.rePassword().touched || form.rePassword().dirty) &&
+				form.rePassword().hasError('required')
+			) {
+				<p-message severity="error" size="small" variant="simple">Password is required.</p-message>
+			}
+
+			@if (
+				(form.rePassword().touched || form.rePassword().dirty) &&
+				form.rePassword().hasError('minlength')
+			) {
+				<p-message severity="error" size="small" variant="simple"
+					>Password should contain at least 8 characters.
+				</p-message>
+			}
+
+			@if (
+				(form.rePassword().touched || form.rePassword().dirty) &&
+				form.rePassword().hasError('pattern')
+			) {
+				<p-message severity="error" size="small" variant="simple">
+					Password should contain at least one: uppercase letter, lowercase letter, number and
+					special symbol ('!', '?', '_', '$', '#', '%', '^', '&', '*').
+				</p-message>
+			}
+
+			@if (
+				(form.rePassword().touched || form.rePassword().dirty) &&
+				form.form.hasError('passwordMismatch')
+			) {
+				<p-message severity="error" size="small" variant="simple">
+					Passwords should match.
+				</p-message>
+			}
+		</ng-container>
+	</gb-auth-password-input>
+
+	<p-button label="Register" type="submit" [loading]="form.auth.isRegistrationLoading()" />
 </form>

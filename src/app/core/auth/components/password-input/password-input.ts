@@ -23,6 +23,11 @@ import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.dire
 })
 export class PasswordInput {
 	password = input.required<FormControl<string>>();
+	label = input('Password');
+	name = input('password');
+	minLength = input(8);
+	maxLength = input(32);
+	placeholder = input('Ex: MyValidPassword123!');
 
 	isPasswordVisible = signal(false);
 
