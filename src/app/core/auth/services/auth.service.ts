@@ -112,6 +112,18 @@ export class AuthService {
 			);
 	}
 
+	logout(): Observable<void> {
+		return this.http
+			.post<void>(
+				'/api/v1/authentication/logout',
+				{},
+				{
+					withCredentials: true,
+				},
+			)
+			.pipe(map(() => this.cleanUp()));
+	}
+
 	private cleanUp() {
 		this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
 
