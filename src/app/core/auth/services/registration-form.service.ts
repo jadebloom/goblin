@@ -59,20 +59,25 @@ export class RegistrationFormService {
 
 		const body: RegistrationPayload = this.form.getRawValue();
 
-		this.auth.register(body).subscribe({
-			next: () => this.router.navigate(['/']),
-			error: (err) => {
-				const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
+		this.auth
+			.register({
+				email: body.email,
+				password: body.password,
+			})
+			.subscribe({
+				next: () => this.router.navigate(['/']),
+				error: (err) => {
+					const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
 
-				this.messages.add({
-					severity: 'error',
-					summary: 'Registration Error',
-					detail: detail,
-					key: 'tc',
-					life: 5000,
-				});
-			},
-		});
+					this.messages.add({
+						severity: 'error',
+						summary: 'Registration Error',
+						detail: detail,
+						key: 'tc',
+						life: 5000,
+					});
+				},
+			});
 	}
 }
 
