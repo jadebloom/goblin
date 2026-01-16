@@ -1,10 +1,10 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { AuthService } from '@core/auth/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginPayload } from '../models/login-payload.model';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
+import { AuthService } from '@core/auth/services/auth.service';
+import { LoginPayload } from '@core/auth/models/login-payload.model';
 
 @Injectable()
 export class LoginFormService {
