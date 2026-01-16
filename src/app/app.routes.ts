@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '@core/auth/guards/auth.guard';
+import { LoginPage } from '@pages/login/login-page';
 import { MainPage } from '@pages/main/main-page';
 import { NotFoundPage } from '@pages/not-found/not-found-page';
 import { RegistrationPage } from '@pages/registration/registration-page';
+import { authGuard } from '@core/auth/guards/auth.guard';
 
 export const routes: Routes = [
 	{
@@ -16,6 +17,11 @@ export const routes: Routes = [
 		title: 'Goblin. Registration',
 		path: 'registration',
 		component: RegistrationPage,
+	},
+	{
+		title: 'Goblin. Login',
+		path: 'login',
+		component: LoginPage,
 	},
 	{
 		title: 'Goblin. Page not found',
