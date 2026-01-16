@@ -1,8 +1,9 @@
-<p-drawer header="Goblin" [(visible)]="navDrawer.isDrawerVisible"> Content </p-drawer>
+<p-drawer header="Welcome to Goblin" [(visible)]="navDrawer.isDrawerVisible">
+	<div class="drawer-content">
+		<p-panel-menu [model]="items" multiple="true" />
 
-<p-button
-	label="Navigate"
-	icon="pi pi-angle-double-right"
-	iconPos="left"
-	(click)="navDrawer.open()"
-/>
+		<p-button label="Logout" variant="text" icon="pi pi-sign-out" (click)="logout()" />
+	</div>
+</p-drawer>
+
+<p-button icon="pi pi-angle-double-right" size="small" rounded="true" (click)="navDrawer.open()" />
