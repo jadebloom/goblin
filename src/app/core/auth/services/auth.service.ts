@@ -1,7 +1,8 @@
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, finalize, map, Observable, of, take, throwError } from 'rxjs';
+import { catchError, finalize, map, Observable, of, throwError } from 'rxjs';
+
 import { AuthResponse } from '@core/auth/models/auth-response.model';
 import { AuthStatus } from '@core/auth/models/auth-status.model';
 import { RegistrationPayload } from '@core/auth/models/registration-payload.model';
@@ -12,14 +13,30 @@ export class AuthService {
 	private readonly http = inject(HttpClient);
 	private readonly platformId = inject(PLATFORM_ID);
 
-	private readonly authStateSubject = new BehaviorSubject<AuthStatus>(AuthStatus.UNAUTHENTICATED);
-	readonly isAuthenticated$ = this.authStateSubject.asObservable();
+	private readonly _authStatus = signal(AuthStatus.UNAUTHENTICATED);
+	readonly authStatus = this._authStatus.asReadonly();
 
 	readonly isRegistrationLoading = signal(false);
 	readonly isLoginLoading = signal(false);
 
+	private setAuthenticated(token?: string) {
+		if (token && isPlatformBrowser(this.platformId)) {
+			localStorage.setItem('access_token', token);
+		}
+
+		this._authStatus.set(AuthStatus.AUTHENTICATED);
+	}
+
+	private setUnauthenticated() {
+		if (isPlatformBrowser(this.platformId)) {
+			localStorage.removeItem('access_token');
+		}
+
+		this._authStatus.set(AuthStatus.UNAUTHENTICATED);
+	}
+
 	register(form: RegistrationPayload): Observable<AuthResponse> {
-		this.authStateSubject.next(AuthStatus.LOADING);
+		this._authStatus.set(AuthStatus.LOADING);
 		this.isRegistrationLoading.set(true);
 
 		return this.http
@@ -29,17 +46,15 @@ export class AuthService {
 			.pipe(
 				map((res) => {
 					if (res.access_token) {
-						localStorage.setItem('access_token', res.access_token);
-
-						this.authStateSubject.next(AuthStatus.AUTHENTICATED);
+						this.setAuthenticated(res.access_token);
 					} else {
-						this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
+						this.setUnauthenticated();
 					}
 
 					return res;
 				}),
 				catchError((err) => {
-					this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
+					this.setUnauthenticated();
 
 					return throwError(() => err);
 				}),
@@ -48,7 +63,7 @@ export class AuthService {
 	}
 
 	login(form: LoginPayload): Observable<AuthResponse> {
-		this.authStateSubject.next(AuthStatus.LOADING);
+		this._authStatus.set(AuthStatus.LOADING);
 		this.isLoginLoading.set(true);
 
 		return this.http
@@ -58,17 +73,15 @@ export class AuthService {
 			.pipe(
 				map((res) => {
 					if (res.access_token) {
-						localStorage.setItem('access_token', res.access_token);
-
-						this.authStateSubject.next(AuthStatus.AUTHENTICATED);
+						this.setAuthenticated(res.access_token);
 					} else {
-						this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
+						this.setUnauthenticated();
 					}
 
 					return res;
 				}),
 				catchError((err) => {
-					this.cleanUp();
+					this.setUnauthenticated();
 
 					return throwError(() => err);
 				}),
@@ -77,58 +90,41 @@ export class AuthService {
 	}
 
 	refresh(): Observable<AuthStatus> {
-		if (this.authStateSubject.getValue() == AuthStatus.LOADING) {
+		if (this.authStatus() === AuthStatus.LOADING) {
 			return of(AuthStatus.LOADING);
 		}
 
-		this.authStateSubject.next(AuthStatus.LOADING);
+		this._authStatus.set(AuthStatus.LOADING);
 
 		return this.http
-			.post<AuthResponse>(
-				'/api/v1/authentication/refresh',
-				{},
-				{
-					withCredentials: true,
-				},
-			)
+			.post<AuthResponse>('/api/v1/authentication/refresh', {}, { withCredentials: true })
 			.pipe(
 				map((res) => {
 					if (res.access_token) {
-						localStorage.setItem('access_token', res.access_token);
+						this.setAuthenticated(res.access_token);
 
-						this.authStateSubject.next(AuthStatus.AUTHENTICATED);
 						return AuthStatus.AUTHENTICATED;
 					}
 
-					this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
+					this.setUnauthenticated();
+
 					return AuthStatus.UNAUTHENTICATED;
 				}),
-				catchError(() => {
-					this.cleanUp();
+				catchError((err) => {
+					this.setUnauthenticated();
 
-					return of(AuthStatus.UNAUTHENTICATED);
+					return throwError(() => err);
 				}),
-				take(1),
 			);
 	}
 
 	logout(): Observable<void> {
 		return this.http
-			.post<void>(
-				'/api/v1/authentication/logout',
-				{},
-				{
-					withCredentials: true,
-				},
-			)
-			.pipe(map(() => this.cleanUp()));
-	}
-
-	private cleanUp() {
-		this.authStateSubject.next(AuthStatus.UNAUTHENTICATED);
-
-		if (isPlatformBrowser(this.platformId)) {
-			localStorage.removeItem('access_token');
-		}
+			.post<void>('/api/v1/authentication/logout', {}, { withCredentials: true })
+			.pipe(
+				map(() => {
+					this.setUnauthenticated();
+				}),
+			);
 	}
 }

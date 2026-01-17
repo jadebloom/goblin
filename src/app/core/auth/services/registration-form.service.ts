@@ -73,7 +73,7 @@ export class RegistrationFormService {
 						severity: 'error',
 						summary: 'Registration Error',
 						detail: detail,
-						key: 'tc',
+						key: 'tr',
 						life: 5000,
 					});
 				},

@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { MainHeader } from '@toolkit/components/main-header/main-header';
 
 @Component({
 	selector: 'gb-overview-page',
-	templateUrl: './overview-page.html',
-	styleUrl: './overview-page.less',
-	imports: [MainHeader],
+	templateUrl: './home-page.html',
 })
-export class OverviewPage {
+export class HomePage {
 	readonly items: MenuItem[] = [{ label: 'Overview' }];
 	readonly home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 }

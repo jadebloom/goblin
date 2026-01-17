@@ -4,3 +4,7 @@
 html {
 	font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
+
+.action-item {
+	@apply hover:bg-surface-100 dark:hover:bg-surface-800 px-2 py-1 rounded-lg transition-colors cursor-pointer;
+}

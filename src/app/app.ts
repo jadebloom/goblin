@@ -2,25 +2,47 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DrawerModule } from 'primeng/drawer';
 import { StartupService } from '@core/startup/startup.service';
-import { MainDrawer } from '@toolkit/components/main-drawer/main-drawer';
+import { ProtectedHeader } from '@toolkit/components/protected-header/protected-header';
+import { PublicHeader } from '@toolkit/components/public-header/public-header';
+import { NavPanel } from '@toolkit/components/nav-panel/nav-panel';
+import { NavPanelService } from '@services/nav-panel.service';
+import { ScreenService } from '@services/screen.service';
 
 @Component({
 	selector: 'app-root',
-	imports: [RouterOutlet, ToastModule, ProgressSpinnerModule, MainDrawer],
-	template: `<main class="h-screen">
+	imports: [
+		RouterOutlet,
+		DrawerModule,
+		ToastModule,
+		ProgressSpinnerModule,
+		ProtectedHeader,
+		PublicHeader,
+		NavPanel,
+	],
+	template: `<main class="h-screen dark:bg-black bg-surface-100">
 		@if (startUp.isStartupFinished()) {
 			<p-toast
-				key="tc"
-				position="top-center"
-				[breakpoints]="{ '920px': { width: '90%', right: 'auto' } }"
+				key="tr"
+				position="top-right"
+				[breakpoints]="{ '640px': { width: '90%', right: 'auto' } }"
 			/>
 
-			<gb-toolkit-main-drawer />
+			@if (screen.isScreenLg()) {
+				<p-drawer header="Welcome to Goblin!" [(visible)]="navPanel.isNavPanelVisible">
+					<gb-toolkit-nav-panel />
+				</p-drawer>
+			}
 
-			<router-outlet />
+			<gb-toolkit-protected-header />
+			<gb-toolkit-public-header />
+
+			<main class="p-6 o">
+				<router-outlet />
+			</main>
 		} @else {
-			<div class="h-screen flex justify-between items-center">
+			<div class="flex justify-between items-center">
 				<p-progress-spinner aria-label="App is starting up..." />
 			</div>
 		}
@@ -28,4 +50,6 @@ import { MainDrawer } from '@toolkit/components/main-drawer/main-drawer';
 })
 export class App {
 	readonly startUp = inject(StartupService);
+	readonly screen = inject(ScreenService);
+	readonly navPanel = inject(NavPanelService);
 }

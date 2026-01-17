@@ -1,0 +1,17 @@
+<div class="space-y-4">
+	@for (section of sections; track $index) {
+		<div>
+			<p class="mb-2 font-medium text-sm uppercase">{{ section.label }}</p>
+
+			<div class="space-y-2">
+				@for (item of section.items; track $index) {
+					<div class="flex items-center gap-2 text-sm action-item" (click)="item.onClick()">
+						<i [class]="item.icon" class="text-sm"></i>
+
+						<p>{{ item.label }}</p>
+					</div>
+				}
+			</div>
+		</div>
+	}
+</div>
