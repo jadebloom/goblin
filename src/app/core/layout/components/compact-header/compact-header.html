@@ -1,6 +1,6 @@
-<section class="page">
+@if (layout.isCompactActive()) {
 	<header>
-		<gb-toolkit-nav-drawer />
+		<gb-layout-nav-drawer />
 
 		<div>
 			<button type="button" class="account-button" (click)="op.toggle($event)">
@@ -12,6 +12,4 @@
 			</p-popover>
 		</div>
 	</header>
-
-	<p>Main page is here</p>
-</section>
+}
