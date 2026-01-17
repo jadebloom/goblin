@@ -1,14 +1,17 @@
-<section class="page">
-	<p class="code">404</p>
+<section class="flex flex-col p-4 h-full">
+	<header class="flex flex-row-reverse items-center mb-6 p-2">
+		<gb-theme-dark-mode-toggle />
+	</header>
 
-	<h1>Page not found</h1>
+	<div class="flex flex-1 justify-center items-center text-center">
+		<div>
+			<p class="mb-4 font-medium text-primary text-2xl">404</p>
 
-	<p class="descr">
-		The page you are looking for might have been <span>removed</span>, had its name
-		<span>changed</span>, or is temporarily <span>unavailable</span>.
-	</p>
+			<h1 class="mb-2 font-medium text-3xl">Not Found</h1>
 
-	<a routerLink="/" pButton icon="pi pi-home">
-		<span pButtonLabel>Go to the main page</span>
-	</a>
+			<p class="mb-8 text-surface-600 dark:text-surface-200">Requested resource is not available</p>
+
+			<p-button label="Go to main page" routerLink="/" rounded="true" />
+		</div>
+	</div>
 </section>

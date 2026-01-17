@@ -49,8 +49,6 @@
 		"primeicons": "^7.0.0",
 		"primeng": "^21.0.2",
 		"rxjs": "~7.8.0",
-		"tailwindcss": "^4.1.18",
-		"tailwindcss-primeui": "^0.6.1",
 		"tslib": "^2.3.0"
 	},
 	"devDependencies": {
@@ -71,7 +69,8 @@
 		"lint-staged": "^16.2.7",
 		"postcss": "^8.5.3",
 		"prettier": "3.7.4",
-		"tailwindcss": "^4.1.12",
+		"tailwindcss": "^4.1.18",
+		"tailwindcss-primeui": "^0.6.1",
 		"typescript": "~5.9.2",
 		"typescript-eslint": "^8.52.0",
 		"vitest": "^4.0.8"

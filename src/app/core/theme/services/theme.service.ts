@@ -1,13 +1,15 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, fromEventPattern, map } from 'rxjs';
+import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { fromEventPattern, map } from 'rxjs';
 import { Theme } from '@core/theme/models/theme.model';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
 	private readonly platformId = inject(PLATFORM_ID);
 
-	private readonly _theme$ = new BehaviorSubject<Theme>(Theme.DARK);
+	private readonly _theme = signal(Theme.DARK);
+
+	readonly isDarkMode = computed(() => this._theme() == Theme.DARK);
 
 	loadTheme(): Promise<void> {
 		return new Promise(() => {
@@ -30,9 +32,9 @@ export class ThemeService {
 
 	toggleTheme() {
 		if (isPlatformBrowser(this.platformId)) {
-			const nextTheme = this._theme$.getValue() == Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
+			const nextTheme = this._theme() == Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
 
-			this._theme$.next(nextTheme);
+			this._theme.set(nextTheme);
 
 			document.querySelector('html')?.classList.toggle('gb-app-dark');
 		}
@@ -43,9 +45,9 @@ export class ThemeService {
 
 		if (htmlClassList == null) return;
 
-		htmlClassList.remove('gb-app-dark');
-		this._theme$.next(theme);
+		this._theme.set(theme);
 
+		htmlClassList.remove('gb-app-dark');
 		if (theme == Theme.DARK) htmlClassList.add('gb-app-dark');
 		else htmlClassList.remove('gb-app-dark');
 	}
