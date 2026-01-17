@@ -8,7 +8,6 @@ import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.dire
 	selector: 'gb-auth-email-input',
 	imports: [ReactiveFormsModule, InputTextModule, MessageModule, SelectOnFocusDirective],
 	templateUrl: './email-input.html',
-	styleUrl: './email-input.less',
 })
 export class EmailInput {
 	email = input.required<FormControl<string>>();

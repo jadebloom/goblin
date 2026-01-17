@@ -10,7 +10,6 @@ import { LoginFormService } from '@core/auth/services/login-form.service';
 	selector: 'gb-auth-login-form',
 	imports: [ReactiveFormsModule, ButtonModule, MessageModule, EmailInput, PasswordInput],
 	templateUrl: './login-form.html',
-	styleUrl: './login-form.less',
 	providers: [LoginFormService],
 })
 export class LoginForm {

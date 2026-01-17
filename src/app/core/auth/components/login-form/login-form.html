@@ -1,4 +1,4 @@
-<form [formGroup]="form.form" (ngSubmit)="form.login()">
+<form [formGroup]="form.form" (ngSubmit)="form.login()" class="gap-8 grid grid-cols-1">
 	<gb-auth-email-input [email]="form.email()">
 		<ng-container errors>
 			@if ((form.email().touched || form.email().dirty) && form.email().hasError('required')) {

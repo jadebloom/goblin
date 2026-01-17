@@ -4,8 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'gb-registration-page',
-	imports: [RegistrationForm, RouterLink],
+	imports: [RouterLink, RegistrationForm],
 	templateUrl: './registration-page.html',
-	styleUrl: './registration-page.less',
 })
 export class RegistrationPage {}
