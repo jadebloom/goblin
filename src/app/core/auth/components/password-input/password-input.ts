@@ -19,7 +19,6 @@ import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.dire
 		SelectOnFocusDirective,
 	],
 	templateUrl: './password-input.html',
-	styleUrl: './password-input.less',
 })
 export class PasswordInput {
 	password = input.required<FormControl<string>>();
