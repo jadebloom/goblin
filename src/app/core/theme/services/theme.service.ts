@@ -1,6 +1,6 @@
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, fromEventPattern, map, startWith } from 'rxjs';
+import { BehaviorSubject, fromEventPattern, map } from 'rxjs';
 import { Theme } from '@core/theme/models/theme.model';
 
 @Injectable({ providedIn: 'root' })
@@ -17,13 +17,12 @@ export class ThemeService {
 
 			const mql = window.matchMedia('(prefers-color-scheme: light)');
 
+			this.setTheme(mql.matches ? Theme.LIGHT : Theme.DARK);
+
 			const systemTheme$ = fromEventPattern<MediaQueryList>(
 				(handler) => mql.addEventListener('change', handler),
 				(handler) => mql.removeEventListener('change', handler),
-			).pipe(
-				map((e) => (e.matches ? Theme.LIGHT : Theme.DARK)),
-				startWith(Theme.DARK),
-			);
+			).pipe(map((e) => (e.matches ? Theme.LIGHT : Theme.DARK)));
 
 			systemTheme$.subscribe((theme) => this.setTheme(theme));
 		});
@@ -40,13 +39,14 @@ export class ThemeService {
 	}
 
 	setTheme(theme: Theme) {
-		const html = document.querySelector('html')?.classList;
+		const htmlClassList = document.querySelector('html')?.classList;
 
-		if (html == null) return;
+		if (htmlClassList == null) return;
 
+		htmlClassList.remove('gb-app-dark');
 		this._theme$.next(theme);
 
-		if (theme == Theme.DARK) html.add('gb-app-dark');
-		else html.remove('gb-app-dark');
+		if (theme == Theme.DARK) htmlClassList.add('gb-app-dark');
+		else htmlClassList.remove('gb-app-dark');
 	}
 }
