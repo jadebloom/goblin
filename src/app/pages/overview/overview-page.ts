@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { CompactHeader } from '@core/layout/components/compact-header/compact-header';
-import { NavSidebar } from '@core/layout/components/nav-sidebar/nav-sidebar';
+import { MainHeader } from '@toolkit/components/main-header/main-header';
 
 @Component({
 	selector: 'gb-overview-page',
 	templateUrl: './overview-page.html',
 	styleUrl: './overview-page.less',
-	imports: [BreadcrumbModule, CompactHeader, NavSidebar],
+	imports: [MainHeader],
 })
 export class OverviewPage {
 	readonly items: MenuItem[] = [{ label: 'Overview' }];

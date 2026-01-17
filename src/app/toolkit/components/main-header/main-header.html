@@ -1,0 +1,25 @@
+<header class="flex justify-between">
+	<div class="main-header-left">
+		<p-button
+			icon="pi pi-bars"
+			[rounded]="true"
+			[text]="true"
+			(click)="mainDrawer.open()"
+			aria-label="Open the main drawer"
+		/>
+
+		<p>Goblin</p>
+	</div>
+
+	<div class="main-header-right">
+		<p-button icon="pi pi-ellipsis-v" variant="text" rounded="true" (click)="op.toggle($event)" />
+
+		<p-popover #op styleClass="popover">
+			<div class="popover-content">
+				<p-button label="Account" routerLink="/account" variant="text" icon="pi pi-user" />
+
+				<p-button label="Logout" variant="text" icon="pi pi-sign-out" />
+			</div>
+		</p-popover>
+	</div>
+</header>

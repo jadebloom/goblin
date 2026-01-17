@@ -3,14 +3,14 @@ import { LoginPage } from '@pages/login/login-page';
 import { OverviewPage } from '@pages/overview/overview-page';
 import { NotFoundPage } from '@pages/not-found/not-found-page';
 import { RegistrationPage } from '@pages/registration/registration-page';
-import { authGuard } from '@core/auth/guards/auth.guard';
 
 export const routes: Routes = [
 	{
 		title: 'Goblin. Overview',
 		path: '',
 		component: OverviewPage,
-		canActivate: [authGuard],
+		// FLAG
+		// canActivate: [authGuard],
 		children: [],
 	},
 	{

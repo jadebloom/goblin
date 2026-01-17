@@ -6,16 +6,16 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem, MessageService } from 'primeng/api';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { AuthService } from '@core/auth/services/auth.service';
-import { NavDrawerService } from '@services/nav-drawer.service';
+import { MainDrawerService } from '@services/main-drawer.service';
 
 @Component({
-	selector: 'gb-layout-nav-drawer',
-	templateUrl: './nav-drawer.html',
-	styleUrl: './nav-drawer.less',
+	selector: 'gb-toolkit-main-drawer',
+	templateUrl: './main-drawer.html',
+	styleUrl: './main-drawer.less',
 	imports: [DrawerModule, ButtonModule, PanelMenuModule],
 })
-export class NavDrawer {
-	readonly navDrawer = inject(NavDrawerService);
+export class MainDrawer {
+	readonly mainDrawer = inject(MainDrawerService);
 	private readonly auth = inject(AuthService);
 	private readonly router = inject(Router);
 	private readonly messages = inject(MessageService);
