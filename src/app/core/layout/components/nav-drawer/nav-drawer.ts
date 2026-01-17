@@ -9,7 +9,7 @@ import { AuthService } from '@core/auth/services/auth.service';
 import { NavDrawerService } from '@services/nav-drawer.service';
 
 @Component({
-	selector: 'gb-toolkit-nav-drawer',
+	selector: 'gb-layout-nav-drawer',
 	templateUrl: './nav-drawer.html',
 	styleUrl: './nav-drawer.less',
 	imports: [DrawerModule, ButtonModule, PanelMenuModule],

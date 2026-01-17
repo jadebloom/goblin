@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
 import { LoginPage } from '@pages/login/login-page';
-import { MainPage } from '@pages/main/main-page';
+import { OverviewPage } from '@pages/overview/overview-page';
 import { NotFoundPage } from '@pages/not-found/not-found-page';
 import { RegistrationPage } from '@pages/registration/registration-page';
 import { authGuard } from '@core/auth/guards/auth.guard';
 
 export const routes: Routes = [
 	{
-		title: 'Goblin. Main page',
+		title: 'Goblin. Overview',
 		path: '',
-		component: MainPage,
+		component: OverviewPage,
 		canActivate: [authGuard],
 		children: [],
 	},
