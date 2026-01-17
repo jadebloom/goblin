@@ -7,6 +7,6 @@ import { ThemeService } from '@core/theme/services/theme.service';
 	templateUrl: './dark-mode-toggle.html',
 	imports: [ButtonModule],
 })
-export class ThemeToggle {
+export class DarkModeToggle {
 	readonly theme = inject(ThemeService);
 }
