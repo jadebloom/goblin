@@ -28,7 +28,12 @@ export const appConfig: ApplicationConfig = {
 			theme: {
 				preset: Aura,
 				options: {
+					prefix: 'p',
 					darkModeSelector: '.gb-app-dark',
+					cssLayer: {
+						name: 'primeng',
+						order: 'theme, base, primeng',
+					},
 				},
 			},
 		}),

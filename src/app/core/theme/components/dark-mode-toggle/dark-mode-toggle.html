@@ -1,0 +1,7 @@
+<p-button
+	[icon]="theme.isDarkMode() ? 'pi pi-moon' : 'pi pi-sun'"
+	variant="text"
+	rounded="true"
+	(click)="theme.toggleTheme()"
+	aria-label="Toggle dark mode"
+/>
