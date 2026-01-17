@@ -52,7 +52,7 @@ export class LoginFormService {
 					severity: 'error',
 					summary: 'Login Error',
 					detail: detail,
-					key: 'tc',
+					key: 'tr',
 					life: 5000,
 				});
 			},

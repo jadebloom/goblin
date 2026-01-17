@@ -6,6 +6,5 @@ import { LoginForm } from '@core/auth/components/login-form/login-form';
 	selector: 'gb-login-page',
 	imports: [LoginForm, RouterLink],
 	templateUrl: './login-page.html',
-	styleUrl: './login-page.less',
 })
 export class LoginPage {}
