@@ -1,0 +1,17 @@
+<main class="app-shell">
+	@if (startUp.isStartupFinished()) {
+		<p-toast
+			key="tc"
+			position="top-center"
+			[breakpoints]="{ '920px': { width: '90%', right: 'auto' } }"
+		/>
+
+		<gb-toolkit-main-drawer />
+
+		<router-outlet />
+	} @else {
+		<div class="app-shell-loading-container">
+			<p-progress-spinner ariaLabel="App is starting up..." />
+		</div>
+	}
+</main>
