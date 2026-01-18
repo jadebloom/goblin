@@ -1,0 +1,18 @@
+.main-sidebar {
+	position: fixed;
+	width: 17rem;
+	height: calc(100vh - 6.5rem);
+	z-index: 999;
+	overflow-y: auto;
+	user-select: none;
+	top: 5rem;
+	left: 2rem;
+}
+
+.main-sidebar-active {
+	transform: translateX(0);
+}
+
+.main-sidebar-passive {
+	transform: translateX(-20rem);
+}
