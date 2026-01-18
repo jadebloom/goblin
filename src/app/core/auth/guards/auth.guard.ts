@@ -1,10 +1,10 @@
 import { inject, PLATFORM_ID, effect } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateChildFn, Router } from '@angular/router';
 import { isPlatformServer } from '@angular/common';
 import { AuthService } from '@core/auth/services/auth.service';
 import { AuthStatus } from '@core/auth/models/auth-status.model';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateChildFn = () => {
 	const auth = inject(AuthService);
 	const router = inject(Router);
 	const platformId = inject(PLATFORM_ID);

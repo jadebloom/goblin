@@ -1,0 +1,13 @@
+@if (screen.isScreenLg()) {
+	<p-drawer header="Goblin" [(visible)]="mainMenu.isMainMenuOpened">
+		<gb-layout-main-menu />
+	</p-drawer>
+} @else {
+	<div
+		class="transition-transform card main-sidebar"
+		[class.main-sidebar-active]="mainMenu.isMainMenuOpened()"
+		[class.main-sidebar-passive]="!mainMenu.isMainMenuOpened()"
+	>
+		<gb-layout-main-menu />
+	</div>
+}

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverModule } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
@@ -7,21 +7,18 @@ import { MessageService } from 'primeng/api';
 import { AuthService } from '@core/auth/services/auth.service';
 import { DarkModeToggle } from '@core/theme/components/dark-mode-toggle/dark-mode-toggle';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
-import { AuthStatus } from '@core/auth/models/auth-status.model';
-import { NavPanelService } from '@services/nav-panel.service';
+import { MainMenuService } from '@core/layout/services/main-menu.service';
 
 @Component({
-	selector: 'gb-toolkit-protected-header',
-	templateUrl: './protected-header.html',
+	selector: 'gb-layout-private-topbar',
+	templateUrl: './private-topbar.html',
 	imports: [ButtonModule, DrawerModule, PopoverModule, DarkModeToggle],
 })
-export class ProtectedHeader {
-	readonly navPanel = inject(NavPanelService);
-	readonly auth = inject(AuthService);
+export class PrivateTopbar {
+	readonly mainMenu = inject(MainMenuService);
+	private readonly auth = inject(AuthService);
 	private readonly router = inject(Router);
 	private readonly messages = inject(MessageService);
-
-	readonly isAuthenticated = computed(() => this.auth.authStatus() == AuthStatus.AUTHENTICATED);
 
 	readonly popoverItems = [
 		{

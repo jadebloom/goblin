@@ -6,5 +6,8 @@ import { RouterLink } from '@angular/router';
 	selector: 'gb-not-found-page',
 	imports: [ButtonModule, RouterLink],
 	templateUrl: './not-found-page.html',
+	host: {
+		class: 'flex flex-col flex-1 justify-center',
+	},
 })
 export class NotFoundPage {}

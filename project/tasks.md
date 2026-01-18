@@ -4,9 +4,10 @@
 
 Version 1.0.0:
 
-- Test everything.
-- Add error message in register and login from the backend.
-- Add lazy import in routing.
+- Update MainMenu using app.menu.
+- Try to use Lato instead of Roboto.
+- Refactor routes as nuxt3.
+- Consider feature flags.
 
 ## Backlog
 

@@ -17,10 +17,10 @@ interface SidebarItem {
 }
 
 @Component({
-	selector: 'gb-toolkit-nav-panel',
-	templateUrl: './nav-panel.html',
+	selector: 'gb-layout-main-menu',
+	templateUrl: './main-menu.html',
 })
-export class NavPanel {
+export class MainMenu {
 	readonly router = inject(Router);
 	private readonly auth = inject(AuthService);
 	private readonly messages = inject(MessageService);
