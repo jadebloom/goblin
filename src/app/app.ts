@@ -21,7 +21,7 @@ import { ScreenService } from '@services/screen.service';
 		PublicHeader,
 		NavPanel,
 	],
-	template: `<main class="h-screen dark:bg-black bg-surface-100">
+	template: `<main class="min-h-screen">
 		@if (startUp.isStartupFinished()) {
 			<p-toast
 				key="tr"
@@ -38,8 +38,22 @@ import { ScreenService } from '@services/screen.service';
 			<gb-toolkit-protected-header />
 			<gb-toolkit-public-header />
 
-			<main class="p-6 o">
-				<router-outlet />
+			<main class="p-6">
+				<div class="flex">
+					<div
+						class="card fixed z-50 top-20 left-6 w-64 h-[calc(100vh-6rem)] overflow-y-auto select-none transform transition-transform duration-300"
+						[class]="navPanel.isNavPanelVisible() ? 'translate-x-0' : '-translate-x-80'"
+					>
+						<gb-toolkit-nav-panel class="h-full" />
+					</div>
+
+					<div
+						class="flex-1 overflow-auto transition-transform duration-300"
+						[class]="navPanel.isNavPanelVisible() ? 'translate-x-70' : 'translate-x-0'"
+					>
+						<router-outlet />
+					</div>
+				</div>
 			</main>
 		} @else {
 			<div class="flex justify-between items-center">

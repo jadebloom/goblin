@@ -3,9 +3,13 @@
 		<div>
 			<p class="mb-2 font-medium text-sm uppercase">{{ section.label }}</p>
 
-			<div class="space-y-2">
+			<div class="space-y-2 text-surface-800 dark:text-surface-200">
 				@for (item of section.items; track $index) {
-					<div class="flex items-center gap-2 text-sm action-item" (click)="item.onClick()">
+					<div
+						class="flex items-center gap-2 text-sm action-item"
+						[class.text-primary]="item.route === this.router.url"
+						(click)="item.onClick()"
+					>
 						<i [class]="item.icon" class="text-sm"></i>
 
 						<p>{{ item.label }}</p>
