@@ -12,17 +12,17 @@ interface SidebarSection {
 interface SidebarItem {
 	label: string;
 	icon: string;
+	route?: string;
 	onClick: () => void;
 }
 
 @Component({
 	selector: 'gb-toolkit-nav-panel',
 	templateUrl: './nav-panel.html',
-	imports: [],
 })
 export class NavPanel {
+	readonly router = inject(Router);
 	private readonly auth = inject(AuthService);
-	private readonly router = inject(Router);
 	private readonly messages = inject(MessageService);
 
 	readonly sections: SidebarSection[] = [
@@ -32,6 +32,7 @@ export class NavPanel {
 				{
 					label: 'Go Home',
 					icon: 'pi pi-home',
+					route: '/',
 					onClick: () => this.router.navigate(['/']),
 				},
 			],
@@ -42,11 +43,13 @@ export class NavPanel {
 				{
 					label: 'View Currencies',
 					icon: 'pi pi-dollar',
+					route: '/currencies',
 					onClick: () => this.router.navigate(['/currencies']),
 				},
 				{
 					label: 'Create Currency',
 					icon: 'pi pi-plus',
+					route: '/currencies/creation',
 					onClick: () => this.router.navigate(['/currencies/creation']),
 				},
 			],
@@ -57,6 +60,7 @@ export class NavPanel {
 				{
 					label: 'Visit Account',
 					icon: 'pi pi-user',
+					route: '/account',
 					onClick: () => this.router.navigate(['/account']),
 				},
 				{

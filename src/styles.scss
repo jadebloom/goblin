@@ -5,6 +5,10 @@ html {
 	font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
+.card {
+	@apply bg-white rounded-lg p-2.5 dark:bg-surface-900;
+}
+
 .action-item {
 	@apply hover:bg-surface-100 dark:hover:bg-surface-800 px-2 py-1 rounded-lg transition-colors cursor-pointer;
 }
