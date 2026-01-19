@@ -1,8 +1,7 @@
 @if (startup.isStartupFinished()) {
 	<gb-layout-global-toasts />
 
-	<!-- // AUTH_FLAG -->
-	@if (!isAuthenticated()) {
+	@if (isAuthenticated()) {
 		<div class="min-h-screen">
 			<gb-layout-private-topbar />
 
@@ -23,7 +22,7 @@
 				<div [class.layout-mask]="mainMenu.isMainMenuOpened()"></div>
 			</div>
 		</div>
-	} @else if (!isUnauthenticated()) {
+	} @else if (isUnauthenticated()) {
 		<div class="flex flex-col min-h-screen">
 			<gb-layout-public-topbar />
 

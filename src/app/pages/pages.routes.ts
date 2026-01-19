@@ -4,23 +4,23 @@ import { HomePage } from '@pages/home/home-page';
 import { NotFoundPage } from '@pages/not-found/not-found-page';
 import authRoutes from '@pages/auth/auth.routes';
 import currenciesRoutes from '@pages/currencies/currencies.routes';
+import { authGuard } from '@core/auth/guards/auth.guard';
 
 export default [
 	{
 		path: '',
 		component: MainLayout,
-		// AUTH_FLAG
-		// canActivateChild: [authGuard],
+		canActivateChild: [authGuard],
 		children: [
 			{
 				title: 'Goblin. Home',
 				path: '',
 				component: HomePage,
 			},
-			...authRoutes,
 			...currenciesRoutes,
 		],
 	},
+	...authRoutes,
 	{
 		path: 'not-found',
 		component: MainLayout,

@@ -1,0 +1,60 @@
+<p-dialog header="Create currency" [(visible)]="modal.isModalOpened" styleClass="w-11/12">
+	<form [formGroup]="modal.form" (ngSubmit)="modal.create()" class="gap-8 grid grid-cols-1 w-full">
+		<div class="flex flex-col gap-2">
+			<label for="name" class="font-medium text-sm">Name <gb-toolkit-required-star /></label>
+
+			<input
+				pInputText
+				formControlName="name"
+				id="name"
+				name="name"
+				type="text"
+				maxlength="64"
+				required
+				placeholder="Ex: US Dollar"
+			/>
+
+			@if ((modal.name().touched || modal.name().dirty) && modal.name().hasError('required')) {
+				<p-message severity="error" size="small" variant="simple">Name is required.</p-message>
+			}
+
+			@if ((modal.name().touched || modal.name().dirty) && modal.name().hasError('maxlength')) {
+				<p-message severity="error" size="small" variant="simple">
+					Name should contain 1 - 64 characters.
+				</p-message>
+			}
+		</div>
+
+		<div class="flex flex-col gap-2">
+			<label for="alphabeticalCode" class="font-medium text-sm">Alphabetical code</label>
+
+			<input
+				pInputText
+				formControlName="alphabeticalCode"
+				id="alphabeticalCode"
+				name="alphabeticalCode"
+				type="text"
+				maxlength="3"
+				placeholder="Ex: USD"
+			/>
+
+			@if (
+				(modal.alphabeticalCode().touched || modal.alphabeticalCode().dirty) &&
+				modal.alphabeticalCode().hasError('pattern')
+			) {
+				<p-message severity="error" size="small" variant="simple">
+					Alphabetical code should follow ISO 4217.
+				</p-message>
+			}
+		</div>
+
+		<p-button
+			label="Create"
+			type="submit"
+			icon="pi pi-plus"
+			rounded="true"
+			[loading]="modal.currencies.isCreationLoading()"
+			styleClass="w-full"
+		/>
+	</form>
+</p-dialog>
