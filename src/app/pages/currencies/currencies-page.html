@@ -1,39 +1,7 @@
 <gb-currencies-currency-creation-modal />
 
 <section>
-	<p-toolbar>
-		<ng-template #start>
-			<div class="flex items-center gap-2">
-				<p-button
-					label="New"
-					severity="secondary"
-					size="small"
-					icon="pi pi-plus"
-					(onClick)="currencyCreationModal.open()"
-				/>
+	<gb-currencies-currencies-toolbar />
 
-				<p-button
-					label="Delete"
-					variant="outlined"
-					size="small"
-					severity="secondary"
-					disabled="true"
-					styleClass="cursor-not-allowed"
-					icon="pi pi-trash"
-				/>
-			</div>
-		</ng-template>
-
-		<ng-template #end>
-			<p-button
-				label="Export"
-				variant="outlined"
-				size="small"
-				severity="secondary"
-				disabled="true"
-				styleClass="cursor-not-allowed"
-				icon="pi pi-upload"
-			/>
-		</ng-template>
-	</p-toolbar>
+	<gb-currencies-currencies-table />
 </section>

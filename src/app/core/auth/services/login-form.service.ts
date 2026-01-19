@@ -50,10 +50,9 @@ export class LoginFormService {
 
 				this.messages.add({
 					severity: 'error',
-					summary: 'Login Error',
+					summary: 'Failed to login',
 					detail: detail,
-					key: 'tr',
-					life: 5000,
+					key: 'main',
 				});
 			},
 		});
