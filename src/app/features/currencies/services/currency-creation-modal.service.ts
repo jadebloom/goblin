@@ -1,12 +1,14 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { CurrenciesService } from '@features/currencies/services/currencies.service';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
+import { CurrencyCreationService } from '@features/currencies/services/currency-creation.service';
+import { CurrenciesTableService } from '@features/currencies/services/currencies-table.service';
 
 @Injectable({ providedIn: 'root' })
 export class CurrencyCreationModalService {
-	readonly currencies = inject(CurrenciesService);
+	readonly creation = inject(CurrencyCreationService);
+	private readonly table = inject(CurrenciesTableService);
 	private readonly messages = inject(MessageService);
 
 	readonly isModalOpened = signal(false);
@@ -41,21 +43,22 @@ export class CurrencyCreationModalService {
 
 		const body = this.form.getRawValue();
 
-		this.currencies
+		this.creation
 			.create({
 				name: body.name,
 				alphabetical_code: body.alphabeticalCode == '' ? undefined : body.alphabeticalCode,
 			})
 			.subscribe({
 				next: (res) => {
+					this.table.load();
+
 					this.form.reset();
 
 					this.messages.add({
 						severity: 'success',
-						summary: 'Creation Success',
+						summary: 'Successfully created new currency!',
 						detail: 'Created currency with the name "' + res.name + '".',
 						key: 'tr',
-						life: 5000,
 					});
 				},
 				error: (err) => {
@@ -63,10 +66,9 @@ export class CurrencyCreationModalService {
 
 					this.messages.add({
 						severity: 'error',
-						summary: 'Creation Error',
+						summary: 'Failed to create new currency',
 						detail: detail,
-						key: 'tr',
-						life: 5000,
+						key: 'main',
 					});
 				},
 			});

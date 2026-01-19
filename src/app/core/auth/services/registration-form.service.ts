@@ -71,10 +71,9 @@ export class RegistrationFormService {
 
 					this.messages.add({
 						severity: 'error',
-						summary: 'Registration Error',
+						summary: 'Failed to register',
 						detail: detail,
-						key: 'tr',
-						life: 5000,
+						key: 'main',
 					});
 				},
 			});

@@ -1,0 +1,53 @@
+<p-confirm-dialog />
+
+@if (table.getting.isLoading()) {
+	<p-progress-spinner class="flex justify-center" aria-label="Currencies loading..." />
+} @else {
+	<div class="card">
+		<p-table
+			[value]="table.currencies()"
+			paginator
+			[rows]="table.pagination.size"
+			[first]="table.pagination.number"
+			[rowsPerPageOptions]="[5, 10, 20, 50]"
+			showCurrentPageReport
+			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} currencies"
+			stripedRows
+			[tableStyle]="{ 'min-width': '50rem' }"
+			(onPage)="table.pageChange($event)"
+		>
+			<ng-template #header>
+				<tr>
+					<th style="width: 15%">ID</th>
+					<th style="width: 20%">Name</th>
+					<th style="width: 25%">Alphabetical Code</th>
+					<th style="width: 25%">Created At</th>
+					<th style="width: 15%">Actions</th>
+				</tr>
+			</ng-template>
+
+			<ng-template #body let-currency>
+				<tr>
+					<td>{{ currency?.id ?? '-' }}</td>
+					<td>{{ currency?.name ?? '-' }}</td>
+					<td class="uppercase">{{ currency?.alphabetical_code ?? '-' }}</td>
+					<td>{{ (currency?.created_at | date: 'long') ?? '-' }}</td>
+					<td>
+						<p-buttongroup>
+							<p-button label="Update" text size="small" icon="pi pi-check" />
+
+							<p-button
+								label="Delete"
+								text
+								severity="danger"
+								size="small"
+								icon="pi pi-trash"
+								(onClick)="confirmDeletion($event, currency?.id)"
+							/>
+						</p-buttongroup>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+}
