@@ -1,16 +1,10 @@
 import { Routes } from '@angular/router';
+import { CurrenciesPage } from '@pages/currencies/currencies-page';
 
 export default [
 	{
 		title: 'Goblin. Your currencies',
 		path: 'currencies',
-		children: [
-			{
-				title: 'Goblin. Create new currency',
-				path: 'creation',
-				loadComponent: () =>
-					import('./creation/creation-page').then((m) => m.CurrenciesCreationPage),
-			},
-		],
+		component: CurrenciesPage,
 	},
 ] as Routes;

@@ -46,12 +46,6 @@ export class MainMenu {
 					route: '/currencies',
 					onClick: () => this.router.navigate(['/currencies']),
 				},
-				{
-					label: 'Create Currency',
-					icon: 'pi pi-plus',
-					route: '/currencies/creation',
-					onClick: () => this.router.navigate(['/currencies/creation']),
-				},
 			],
 		},
 		{
