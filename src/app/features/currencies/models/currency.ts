@@ -1,7 +1,7 @@
 export interface Currency {
-	id?: number;
-	name?: string;
-	alphabetical_code?: string;
-	creator_id?: number;
-	created_at?: string;
+	id: number;
+	name: string;
+	alphabetical_code: string | null;
+	creator_id: number;
+	created_at: string;
 }

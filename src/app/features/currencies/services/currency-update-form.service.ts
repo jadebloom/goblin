@@ -1,17 +1,18 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
-import { CurrencyCreationService } from '@features/currencies/services/currency-creation.service';
 import { CurrenciesTableService } from '@features/currencies/services/currencies-table.service';
+import { CurrencyUpdateService } from '@features/currencies/services/currency-update.service';
+import { Currency } from '../models/currency';
 
 @Injectable({ providedIn: 'root' })
-export class CurrencyCreationModalService {
-	readonly creation = inject(CurrencyCreationService);
-	private readonly table = inject(CurrenciesTableService);
-	private readonly messages = inject(MessageService);
+export class CurrencyUpdateFormService {
+	readonly updateService = inject(CurrencyUpdateService);
+	private readonly tableService = inject(CurrenciesTableService);
+	private readonly messagesService = inject(MessageService);
 
-	readonly isModalOpened = signal(false);
+	readonly initialCurrency = signal<Currency | null>(null);
 
 	readonly form = new FormGroup({
 		name: new FormControl('', {
@@ -34,51 +35,56 @@ export class CurrencyCreationModalService {
 		() => this.form.get('alphabeticalCode') as FormControl<string>,
 	);
 
-	create() {
+	constructor() {
+		effect(() => {
+			this.form.get('name')?.setValue(this.initialCurrency()?.name ?? '');
+			this.form.get('alphabeticalCode')?.setValue(this.initialCurrency()?.alphabetical_code ?? '');
+		});
+	}
+
+	update() {
 		if (this.form.invalid) {
 			this.form.markAllAsTouched();
 
 			return;
 		}
 
+		const currencyId = this.initialCurrency()?.id;
+
+		if (currencyId == null) return;
+
 		const body = this.form.getRawValue();
 
-		this.creation
-			.create({
+		this.updateService
+			.update(currencyId, {
 				name: body.name,
-				alphabetical_code: body.alphabeticalCode == '' ? undefined : body.alphabeticalCode,
+				alphabetical_code: body.alphabeticalCode == '' ? null : body.alphabeticalCode,
 			})
 			.subscribe({
 				next: (res) => {
-					this.table.load();
+					this.tableService.load();
+
+					this.initialCurrency.set(res);
 
 					this.form.reset();
 
-					this.messages.add({
+					this.messagesService.add({
 						severity: 'success',
-						summary: 'Successfully created new currency!',
-						detail: 'Created currency with the name "' + res.name + '".',
-						key: 'tr',
+						summary: 'Successfully updated the currency!',
+						detail: 'Updated the currency with the ID=' + currencyId,
+						key: 'main',
 					});
 				},
 				error: (err) => {
 					const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
 
-					this.messages.add({
+					this.messagesService.add({
 						severity: 'error',
-						summary: 'Failed to create new currency',
+						summary: 'Failed to updated the currency with ID=' + currencyId,
 						detail: detail,
 						key: 'main',
 					});
 				},
 			});
-	}
-
-	open() {
-		this.isModalOpened.set(true);
-	}
-
-	close() {
-		this.isModalOpened.set(false);
 	}
 }

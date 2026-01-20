@@ -4,9 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 ### Added
+- Added the main layout.
 - Added the not-found page.
 - Added registration page with registration logic.
 - Added login page with login logic.
+- Added currencies page with its main logic.
 ### Changed
 - For changes in existing functionality.
 ### Deprecated
