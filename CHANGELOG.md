@@ -8,7 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 - Added the not-found page.
 - Added registration page with registration logic.
 - Added login page with login logic.
-- Added currencies page with its main logic.
+- Added currencies page with paginated currencies table.
+- Added currency creation modal.
+- Added currency update modal.
 ### Changed
 - For changes in existing functionality.
 ### Deprecated
