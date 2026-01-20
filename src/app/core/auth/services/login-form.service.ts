@@ -1,4 +1,4 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -29,10 +29,6 @@ export class LoginFormService {
 			],
 		}),
 	});
-
-	readonly email = computed(() => this.form.get('email') as FormControl<string>);
-
-	readonly password = computed(() => this.form.get('password') as FormControl<string>);
 
 	login() {
 		if (this.form.invalid) {

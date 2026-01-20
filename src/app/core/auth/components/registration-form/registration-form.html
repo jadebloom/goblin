@@ -1,11 +1,15 @@
-<form [formGroup]="form.form" (ngSubmit)="form.register()" class="gap-8 grid grid-cols-1 w-full">
-	<gb-auth-email-input [email]="form.email()">
+<form
+	[formGroup]="formService.form"
+	(ngSubmit)="formService.register()"
+	class="gap-8 grid grid-cols-1 w-full"
+>
+	<gb-auth-email-input [email]="email()">
 		<ng-container errors>
-			@if ((form.email().touched || form.email().dirty) && form.email().hasError('required')) {
+			@if ((email().touched || email().dirty) && email().hasError('required')) {
 				<p-message severity="error" size="small" variant="simple">Email is required.</p-message>
 			}
 
-			@if ((form.email().touched || form.email().dirty) && form.email().hasError('email')) {
+			@if ((email().touched || email().dirty) && email().hasError('email')) {
 				<p-message severity="error" size="small" variant="simple">
 					Email should be a valid email address.
 				</p-message>
@@ -13,25 +17,19 @@
 		</ng-container>
 	</gb-auth-email-input>
 
-	<gb-auth-password-input [password]="form.password()">
+	<gb-auth-password-input [password]="password()">
 		<ng-container errors>
-			@if (
-				(form.password().touched || form.password().dirty) && form.password().hasError('required')
-			) {
+			@if ((password().touched || password().dirty) && password().hasError('required')) {
 				<p-message severity="error" size="small" variant="simple">Password is required.</p-message>
 			}
 
-			@if (
-				(form.password().touched || form.password().dirty) && form.password().hasError('minlength')
-			) {
+			@if ((password().touched || password().dirty) && password().hasError('minlength')) {
 				<p-message severity="error" size="small" variant="simple"
 					>Password should contain at least 8 characters.
 				</p-message>
 			}
 
-			@if (
-				(form.password().touched || form.password().dirty) && form.password().hasError('pattern')
-			) {
+			@if ((password().touched || password().dirty) && password().hasError('pattern')) {
 				<p-message severity="error" size="small" variant="simple">
 					Password should contain at least one: uppercase letter, lowercase letter, number and
 					special symbol ('!', '?', '_', '$', '#', '%', '^', '&', '*').
@@ -40,28 +38,19 @@
 		</ng-container>
 	</gb-auth-password-input>
 
-	<gb-auth-password-input name="rePassword" [password]="form.rePassword()" label="Confirm password">
+	<gb-auth-password-input name="rePassword" [password]="rePassword()" label="Confirm password">
 		<ng-container errors>
-			@if (
-				(form.rePassword().touched || form.rePassword().dirty) &&
-				form.rePassword().hasError('required')
-			) {
+			@if ((rePassword().touched || rePassword().dirty) && rePassword().hasError('required')) {
 				<p-message severity="error" size="small" variant="simple">Password is required.</p-message>
 			}
 
-			@if (
-				(form.rePassword().touched || form.rePassword().dirty) &&
-				form.rePassword().hasError('minlength')
-			) {
+			@if ((rePassword().touched || rePassword().dirty) && rePassword().hasError('minlength')) {
 				<p-message severity="error" size="small" variant="simple"
 					>Password should contain at least 8 characters.
 				</p-message>
 			}
 
-			@if (
-				(form.rePassword().touched || form.rePassword().dirty) &&
-				form.rePassword().hasError('pattern')
-			) {
+			@if ((rePassword().touched || rePassword().dirty) && rePassword().hasError('pattern')) {
 				<p-message severity="error" size="small" variant="simple">
 					Password should contain at least one: uppercase letter, lowercase letter, number and
 					special symbol ('!', '?', '_', '$', '#', '%', '^', '&', '*').
@@ -69,8 +58,8 @@
 			}
 
 			@if (
-				(form.rePassword().touched || form.rePassword().dirty) &&
-				form.form.hasError('passwordMismatch')
+				(rePassword().touched || rePassword().dirty) &&
+				formService.form.hasError('passwordMismatch')
 			) {
 				<p-message severity="error" size="small" variant="simple">
 					Passwords should match.
@@ -84,7 +73,7 @@
 		type="submit"
 		icon="pi pi-sign-in"
 		rounded="true"
-		[loading]="form.auth.isRegistrationLoading()"
+		[loading]="formService.auth.isRegistrationLoading()"
 		styleClass="w-full"
 	/>
 </form>

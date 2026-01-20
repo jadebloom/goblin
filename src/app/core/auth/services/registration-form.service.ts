@@ -1,4 +1,4 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -43,12 +43,6 @@ export class RegistrationFormService {
 		},
 		{ validators: passwordsMatchValidator },
 	);
-
-	readonly email = computed(() => this.form.get('email') as FormControl<string>);
-
-	readonly password = computed(() => this.form.get('password') as FormControl<string>);
-
-	readonly rePassword = computed(() => this.form.get('rePassword') as FormControl<string>);
 
 	register() {
 		if (this.form.invalid) {
