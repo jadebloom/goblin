@@ -1,20 +1,20 @@
 <p-confirm-dialog />
 
-@if (table.getting.isLoading()) {
+@if (tableService.getting.isLoading()) {
 	<p-progress-spinner class="flex justify-center" aria-label="Currencies loading..." />
 } @else {
 	<div class="card">
 		<p-table
-			[value]="table.currencies()"
+			[value]="tableService.currencies()"
 			paginator
-			[rows]="table.pagination.size"
-			[first]="table.pagination.number"
+			[rows]="tableService.pagination.size"
+			[first]="tableService.pagination.number"
 			[rowsPerPageOptions]="[5, 10, 20, 50]"
 			showCurrentPageReport
 			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} currencies"
 			stripedRows
 			[tableStyle]="{ 'min-width': '50rem' }"
-			(onPage)="table.pageChange($event)"
+			(onPage)="tableService.pageChange($event)"
 		>
 			<ng-template #header>
 				<tr>
@@ -28,21 +28,29 @@
 
 			<ng-template #body let-currency>
 				<tr>
-					<td>{{ currency?.id ?? '-' }}</td>
-					<td>{{ currency?.name ?? '-' }}</td>
-					<td class="uppercase">{{ currency?.alphabetical_code ?? '-' }}</td>
-					<td>{{ (currency?.created_at | date: 'long') ?? '-' }}</td>
+					<td>{{ currency.id ?? '-' }}</td>
+					<td>{{ currency.name ?? '-' }}</td>
+					<td class="uppercase">{{ currency.alphabetical_code ?? '-' }}</td>
+					<td>{{ (currency.created_at | date: 'long') ?? '-' }}</td>
 					<td>
 						<p-buttongroup>
-							<p-button label="Update" text size="small" icon="pi pi-check" />
+							<p-button
+								label="Update"
+								text
+								size="small"
+								[disabled]="typeof currency.id != 'number'"
+								icon="pi pi-check"
+								(onClick)="openCurrencyUpdateDialog(currency)"
+							/>
 
 							<p-button
 								label="Delete"
 								text
 								severity="danger"
 								size="small"
+								[disabled]="typeof currency.id != 'number'"
 								icon="pi pi-trash"
-								(onClick)="confirmDeletion($event, currency?.id)"
+								(onClick)="confirmDeletion($event, currency.id)"
 							/>
 						</p-buttongroup>
 					</td>
