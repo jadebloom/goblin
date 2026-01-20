@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { RegistrationFormService } from '@core/auth/services/registration-form.service';
@@ -13,5 +13,13 @@ import { PasswordInput } from '@core/auth/components/password-input/password-inp
 	providers: [RegistrationFormService],
 })
 export class RegistrationForm {
-	readonly form = inject(RegistrationFormService);
+	readonly formService = inject(RegistrationFormService);
+
+	readonly email = computed(() => this.formService.form.get('email') as FormControl<string>);
+
+	readonly password = computed(() => this.formService.form.get('password') as FormControl<string>);
+
+	readonly rePassword = computed(
+		() => this.formService.form.get('rePassword') as FormControl<string>,
+	);
 }
