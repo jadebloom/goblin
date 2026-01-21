@@ -1,16 +1,16 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
-import { CurrencyUpdateFormService } from '@features/currencies/services/currency-update-form.service';
+import { UpdateCurrencyFormService } from '@features/currencies/services/update-currency-form.service';
 import { Currency } from '@features/currencies/models/currency';
 import { RequiredStar } from '@toolkit/components/required-star/required-star';
 
 @Component({
-	selector: 'gb-currencies-currency-update-form',
-	templateUrl: './currency-update-form.html',
+	selector: 'gb-currencies-update-currency-form',
+	templateUrl: './update-currency-form.html',
 	imports: [
 		ReactiveFormsModule,
 		DialogModule,
@@ -20,12 +20,14 @@ import { RequiredStar } from '@toolkit/components/required-star/required-star';
 		RequiredStar,
 	],
 })
-export class CurrencyUpdateForm {
-	readonly formService = inject(CurrencyUpdateFormService);
+export class UpdateCurrencyForm implements OnInit {
+	protected readonly formService = inject(UpdateCurrencyFormService);
 
-	readonly initialCurrency = input.required<Currency>();
+	readonly currency = input.required<Currency>();
 
-	ngOnInit() {
-		this.formService.initialCurrency.set(this.initialCurrency());
+	ngOnInit(): void {
+		const init = this.currency();
+
+		this.formService.loadInitialCurrency(init);
 	}
 }

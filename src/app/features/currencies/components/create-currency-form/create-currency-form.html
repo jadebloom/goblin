@@ -1,6 +1,6 @@
 <form
 	[formGroup]="formService.form"
-	(ngSubmit)="formService.update()"
+	(ngSubmit)="formService.createCurrency()"
 	class="gap-8 grid grid-cols-1 w-full"
 >
 	<div class="flex flex-col gap-2">
@@ -18,15 +18,15 @@
 		/>
 
 		@if (
-			(formService.name().touched || formService.name().dirty) &&
-			formService.name().hasError('required')
+			(formService.form.get('name')?.touched || formService.form.get('name')?.dirty) &&
+			formService.form.get('name')?.hasError('required')
 		) {
 			<p-message severity="error" size="small" variant="simple">Name is required.</p-message>
 		}
 
 		@if (
-			(formService.name().touched || formService.name().dirty) &&
-			formService.name().hasError('maxlength')
+			(formService.form.get('name')?.touched || formService.form.get('name')?.dirty) &&
+			formService.form.get('name')?.hasError('maxlength')
 		) {
 			<p-message severity="error" size="small" variant="simple">
 				Name should contain 1 - 64 characters.
@@ -48,8 +48,9 @@
 		/>
 
 		@if (
-			(formService.alphabeticalCode().touched || formService.alphabeticalCode().dirty) &&
-			formService.alphabeticalCode().hasError('pattern')
+			(formService.form.get('alphabeticalCode')?.touched ||
+				formService.form.get('alphabeticalCode')?.dirty) &&
+			formService.form.get('alphabeticalCode')?.hasError('pattern')
 		) {
 			<p-message severity="error" size="small" variant="simple">
 				Alphabetical code should follow ISO 4217.
@@ -58,11 +59,12 @@
 	</div>
 
 	<p-button
-		label="Update"
+		label="Create"
 		type="submit"
-		icon="pi pi-pencil"
+		icon="pi pi-plus"
 		rounded="true"
-		[loading]="formService.updateService.isLoading()"
+		[loading]="formService.isCreatingCurrency()"
+		[disabled]="formService.isCreatingCurrency()"
 		styleClass="w-full"
 	/>
 </form>

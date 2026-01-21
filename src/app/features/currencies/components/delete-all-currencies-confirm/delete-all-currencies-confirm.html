@@ -1,0 +1,17 @@
+<div class="space-y-8">
+	<div class="flex items-center gap-4">
+		<i class="pi pi-info"></i>
+
+		<p>Do you want to delete all currencies? This operation cannot be reversed.</p>
+	</div>
+
+	<div class="flex flex-row-reverse items-center gap-4">
+		<p-button
+			label="Delete"
+			severity="danger"
+			[loading]="areCurrenciesDeleting()"
+			[disabled]="areCurrenciesDeleting()"
+			(onClick)="deleteAllCurrencies()"
+		/>
+	</div>
+</div>

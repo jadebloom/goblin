@@ -1,4 +1,4 @@
-export interface Page {
+export interface PaginationPage {
 	size: number;
 	number: number;
 	totalElement: number;

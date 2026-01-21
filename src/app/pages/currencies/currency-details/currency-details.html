@@ -1,0 +1,25 @@
+@if (isCurrencyLoading()) {
+	<p-progress-spinner class="flex justify-center" aria-label="Currency is loading..." />
+} @else {
+	@let init = currency();
+
+	@if (init == null) {
+		<section>
+			<div class="flex justify-between items-center gap-4">
+				<p-message severity="error" icon="pi pi-times-circle">
+					Unfortunately, the currency wasn't found.
+				</p-message>
+
+				<p-button label="Refresh" severity="secondary" icon="pi pi-refresh" />
+			</div>
+		</section>
+	} @else {
+		<section class="flex flex-col gap-4">
+			<gb-currencies-currency-toolbar [currency]="init" class="card" />
+
+			<div class="card">
+				<gb-currencies-update-currency-form [currency]="init" />
+			</div>
+		</section>
+	}
+}

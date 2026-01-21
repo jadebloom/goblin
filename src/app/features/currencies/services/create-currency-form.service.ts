@@ -1,15 +1,18 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
-import { CurrencyCreationService } from '@features/currencies/services/currency-creation.service';
+import { CreateCurrencyService } from '@features/currencies/services/create-currency.service';
 import { CurrenciesTableService } from '@features/currencies/services/currencies-table.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
-export class CurrencyCreationFormService {
-	readonly creation = inject(CurrencyCreationService);
-	private readonly table = inject(CurrenciesTableService);
-	private readonly messages = inject(MessageService);
+export class CreateCurrencyFormService {
+	readonly createCurrencyService = inject(CreateCurrencyService);
+	private readonly currenciesTableService = inject(CurrenciesTableService);
+	private readonly messageService = inject(MessageService);
+	private readonly destroyRef = inject(DestroyRef);
 
 	readonly form = new FormGroup({
 		name: new FormControl('', {
@@ -26,33 +29,37 @@ export class CurrencyCreationFormService {
 		}),
 	});
 
-	readonly name = computed(() => this.form.get('name') as FormControl<string>);
+	readonly isCreatingCurrency = signal(false);
 
-	readonly alphabeticalCode = computed(
-		() => this.form.get('alphabeticalCode') as FormControl<string>,
-	);
-
-	create() {
+	createCurrency() {
 		if (this.form.invalid) {
 			this.form.markAllAsTouched();
 
 			return;
 		}
 
+		if (this.isCreatingCurrency()) return;
+
+		this.isCreatingCurrency.set(true);
+
 		const body = this.form.getRawValue();
 
-		this.creation
-			.create({
+		this.createCurrencyService
+			.createCurrency({
 				name: body.name,
 				alphabetical_code: body.alphabeticalCode == '' ? undefined : body.alphabeticalCode,
 			})
+			.pipe(
+				takeUntilDestroyed(this.destroyRef),
+				finalize(() => this.isCreatingCurrency.set(false)),
+			)
 			.subscribe({
 				next: (res) => {
-					this.table.load();
+					this.currenciesTableService.loadCurrenciesInTable();
 
 					this.form.reset();
 
-					this.messages.add({
+					this.messageService.add({
 						severity: 'success',
 						summary: 'Successfully created new currency!',
 						detail: 'Created currency with the name=' + res.name,
@@ -62,7 +69,7 @@ export class CurrencyCreationFormService {
 				error: (err) => {
 					const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
 
-					this.messages.add({
+					this.messageService.add({
 						severity: 'error',
 						summary: 'Failed to create new currency',
 						detail: detail,

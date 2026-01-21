@@ -1,6 +1,6 @@
-import { Page } from '@models/page';
+import { PaginationPage } from '@models/pagination-page';
 
 export interface PaginationResponse<T> {
-	page?: Page;
-	content?: T[];
+	page: PaginationPage;
+	content: T[];
 }
