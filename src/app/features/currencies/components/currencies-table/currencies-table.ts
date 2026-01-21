@@ -1,17 +1,18 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { CurrenciesTableService } from '@features/currencies/services/currencies-table.service';
-import { CurrencyDeletionService } from '@features/currencies/services/currency-deletion.service';
-import { CurrencyUpdateForm } from '../currency-update-form/currency-update-form';
+import { DeleteCurrencyConfirm } from '@features/currencies/components/delete-currency-confirm/delete-currency-confirm';
+import { UpdateCurrencyForm } from '@features/currencies/components/update-currency-form/update-currency-form';
 import { Currency } from '@features/currencies/models/currency';
+import { RefreshableEmptyContent } from '@toolkit/components/refreshable-empty-content/refreshable-empty-content';
 
 @Component({
 	selector: 'gb-currencies-currencies-table',
@@ -23,27 +24,28 @@ import { Currency } from '@features/currencies/models/currency';
 		ButtonGroupModule,
 		ProgressSpinnerModule,
 		DatePipe,
+		RefreshableEmptyContent,
 	],
 	providers: [ConfirmationService, DialogService],
 })
-export class CurrenciesTable implements OnDestroy {
-	readonly tableService = inject(CurrenciesTableService);
-	private readonly deletionService = inject(CurrencyDeletionService);
-	private readonly confirmationService = inject(ConfirmationService);
+export class CurrenciesTable implements OnInit {
+	protected readonly currenciesTableService = inject(CurrenciesTableService);
+	protected readonly router = inject(Router);
 	private readonly dialogService = inject(DialogService);
-	private readonly messagesService = inject(MessageService);
 
-	dialogRef?: DynamicDialogRef | null;
+	private dialogRef?: DynamicDialogRef | null;
 
-	ngOnInit() {
-		this.tableService.load();
+	ngOnInit(): void {
+		this.currenciesTableService.loadCurrenciesInTable();
 	}
 
-	openCurrencyUpdateDialog(currency: Currency) {
-		this.dialogRef = this.dialogService.open(CurrencyUpdateForm, {
+	openCurrencyUpdateDialog(event: Event, currency: Currency) {
+		event.stopPropagation();
+
+		this.dialogRef = this.dialogService.open(UpdateCurrencyForm, {
 			header: 'Update currency',
 			inputValues: {
-				initialCurrency: currency,
+				currency,
 			},
 			width: '24rem',
 			breakpoints: {
@@ -54,63 +56,20 @@ export class CurrenciesTable implements OnDestroy {
 		});
 	}
 
-	confirmDeletion(event: Event, currencyId: unknown) {
-		if (typeof currencyId != 'number') {
-			this.messagesService.add({
-				severity: 'error',
-				summary: 'Failed to delete the currency with no ID',
-				detail: 'The currency has no associated ID required for deletion',
-				key: 'main',
-			});
+	openCurrencyDeleteDialog(event: Event, currency: Currency) {
+		event.stopPropagation();
 
-			return;
-		}
-
-		this.confirmationService.confirm({
-			target: event.target as EventTarget,
-			message: 'Do you want to delete this currency?',
-			header: 'Danger Zone',
-			icon: 'pi pi-info-circle',
-			rejectLabel: 'Cancel',
-			rejectButtonProps: {
-				label: 'Cancel',
-				severity: 'secondary',
-				outlined: true,
+		this.dialogRef = this.dialogService.open(DeleteCurrencyConfirm, {
+			header: 'Deleting currency',
+			inputValues: {
+				currency,
 			},
-			acceptButtonProps: {
-				label: 'Delete',
-				severity: 'danger',
+			width: '24rem',
+			breakpoints: {
+				'768px': '90%',
 			},
-			accept: () => {
-				this.deletionService.delete(currencyId).subscribe({
-					next: () => {
-						this.tableService.load();
-
-						this.messagesService.add({
-							severity: 'success',
-							summary: 'Successful deletion!',
-							detail: 'Successfully deleted the currency with ID=' + currencyId,
-							key: 'main',
-						});
-					},
-					error: (err) => {
-						const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
-
-						this.messagesService.add({
-							severity: 'error',
-							summary: 'Failed to delete the currency with ID=' + currencyId,
-							detail: detail,
-							key: 'main',
-						});
-					},
-				});
-			},
+			baseZIndex: 10000,
+			closable: true,
 		});
-	}
-
-	ngOnDestroy() {
-		if (this.dialogRef) {
-			this.dialogRef.close();
-		}
 	}
 }

@@ -4,12 +4,12 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
-import { CurrencyCreationFormService } from '@features/currencies/services/currency-creation-form.service';
+import { CreateCurrencyFormService } from '@features/currencies/services/create-currency-form.service';
 import { RequiredStar } from '@toolkit/components/required-star/required-star';
 
 @Component({
-	selector: 'gb-currencies-currency-creation-form',
-	templateUrl: './currency-creation-form.html',
+	selector: 'gb-currencies-create-currency-form',
+	templateUrl: './create-currency-form.html',
 	imports: [
 		ReactiveFormsModule,
 		DialogModule,
@@ -19,6 +19,6 @@ import { RequiredStar } from '@toolkit/components/required-star/required-star';
 		RequiredStar,
 	],
 })
-export class CurrencyCreationForm {
-	readonly formService = inject(CurrencyCreationFormService);
+export class CreateCurrencyForm {
+	protected readonly formService = inject(CreateCurrencyFormService);
 }

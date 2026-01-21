@@ -1,4 +1,4 @@
-export interface CurrencyUpdatePayload {
+export interface UpdateCurrencyPayload {
 	name: string; // 1-64
 	alphabetical_code?: string | null; // 3, alphabetical code
 }

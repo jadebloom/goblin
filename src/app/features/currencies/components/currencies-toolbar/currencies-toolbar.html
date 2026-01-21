@@ -13,10 +13,19 @@
 				label="Delete"
 				variant="outlined"
 				size="small"
-				severity="secondary"
+				severity="danger"
 				disabled="true"
 				styleClass="cursor-not-allowed"
 				icon="pi pi-trash"
+			/>
+
+			<p-button
+				label="Delete all"
+				variant="outlined"
+				size="small"
+				severity="danger"
+				icon="pi pi-trash"
+				(onClick)="openDeleteAllCurrenciesDialog()"
 			/>
 		</div>
 	</ng-template>
