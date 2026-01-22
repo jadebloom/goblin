@@ -21,7 +21,7 @@ export const authGuard: CanActivateChildFn = () => {
 			filter((status) => status !== AuthStatus.LOADING),
 			take(1),
 			map((status) =>
-				status === AuthStatus.AUTHENTICATED ? true : router.createUrlTree(['/auth/registration']),
+				status === AuthStatus.AUTHENTICATED ? true : router.createUrlTree(['/registration']),
 			),
 		),
 	);

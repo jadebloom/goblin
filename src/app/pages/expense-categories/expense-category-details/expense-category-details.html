@@ -1,0 +1,30 @@
+@if (isExpenseCategoryLoading()) {
+	<p-progress-spinner class="flex justify-center" aria-label="Expense category is loading..." />
+} @else {
+	@let init = expenseCategory();
+
+	@if (init == null) {
+		<section>
+			<div class="flex justify-between items-center gap-4">
+				<p-message severity="error" icon="pi pi-times-circle">
+					Unfortunately, the expense category wasn't found.
+				</p-message>
+
+				<p-button
+					label="Refresh"
+					severity="secondary"
+					icon="pi pi-refresh"
+					(onClick)="loadExpenseCategory()"
+				/>
+			</div>
+		</section>
+	} @else {
+		<section class="flex flex-col gap-4">
+			<gb-expense-category-toolbar [expenseCategory]="init" class="card" />
+
+			<div class="card">
+				<gb-update-expense-category-form [expenseCategory]="init" />
+			</div>
+		</section>
+	}
+}

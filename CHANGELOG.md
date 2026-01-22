@@ -8,12 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 - Added the not-found page.
 - Added registration page with registration logic.
 - Added login page with login logic.
-- Added currencies page with paginated currencies table.
-- Added currency creation modal.
-- Added currency update modal.
-- Added currency delete confirm.
-- Added currencies delete all confirm.
-- Added deletion of all expenses that use a currency.
+- Added expense categories page with paginated expense categories table.
+- Added expense category creation modal.
+- Added expense category update modal.
+- Added expense category deletion confirm modal.
+- Added delete all expense categories confirm modal.
+- Added deletion of all expenses that use an expense category.
 ### Changed
 - For changes in existing functionality.
 ### Deprecated
