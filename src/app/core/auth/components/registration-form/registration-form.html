@@ -3,7 +3,7 @@
 	(ngSubmit)="formService.register()"
 	class="gap-8 grid grid-cols-1 w-full"
 >
-	<gb-auth-email-input [email]="email()">
+	<gb-email-input [email]="email()">
 		<ng-container errors>
 			@if ((email().touched || email().dirty) && email().hasError('required')) {
 				<p-message severity="error" size="small" variant="simple">Email is required.</p-message>
@@ -15,9 +15,9 @@
 				</p-message>
 			}
 		</ng-container>
-	</gb-auth-email-input>
+	</gb-email-input>
 
-	<gb-auth-password-input [password]="password()">
+	<gb-password-input [password]="password()">
 		<ng-container errors>
 			@if ((password().touched || password().dirty) && password().hasError('required')) {
 				<p-message severity="error" size="small" variant="simple">Password is required.</p-message>
@@ -36,9 +36,9 @@
 				</p-message>
 			}
 		</ng-container>
-	</gb-auth-password-input>
+	</gb-password-input>
 
-	<gb-auth-password-input name="rePassword" [password]="rePassword()" label="Confirm password">
+	<gb-password-input name="rePassword" [password]="rePassword()" label="Confirm password">
 		<ng-container errors>
 			@if ((rePassword().touched || rePassword().dirty) && rePassword().hasError('required')) {
 				<p-message severity="error" size="small" variant="simple">Password is required.</p-message>
@@ -66,14 +66,14 @@
 				</p-message>
 			}
 		</ng-container>
-	</gb-auth-password-input>
+	</gb-password-input>
 
 	<p-button
 		label="Register"
 		type="submit"
 		icon="pi pi-sign-in"
 		rounded="true"
-		[loading]="formService.auth.isRegistrationLoading()"
+		[loading]="formService.isRegistrationLoading()"
 		styleClass="w-full"
 	/>
 </form>

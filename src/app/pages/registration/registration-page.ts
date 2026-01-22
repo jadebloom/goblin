@@ -3,7 +3,7 @@ import { RegistrationForm } from '@core/auth/components/registration-form/regist
 import { RouterLink } from '@angular/router';
 
 @Component({
-	selector: 'gb-auth-registration-page',
+	selector: 'gb-registration-page',
 	imports: [RouterLink, RegistrationForm],
 	templateUrl: './registration-page.html',
 	host: {

@@ -17,13 +17,13 @@ interface SidebarItem {
 }
 
 @Component({
-	selector: 'gb-layout-main-menu',
+	selector: 'gb-main-menu',
 	templateUrl: './main-menu.html',
 })
 export class MainMenu {
-	readonly router = inject(Router);
-	private readonly auth = inject(AuthService);
-	private readonly messages = inject(MessageService);
+	protected readonly router = inject(Router);
+	private readonly authService = inject(AuthService);
+	private readonly messageService = inject(MessageService);
 
 	readonly sections: SidebarSection[] = [
 		{
@@ -76,15 +76,15 @@ export class MainMenu {
 		},
 	];
 
-	logout() {
-		this.auth.logout().subscribe({
+	protected logout() {
+		this.authService.logout().subscribe({
 			next: () => {
-				this.router.navigate(['/auth/registration']);
+				this.router.navigate(['/registration']);
 			},
 			error: (err) => {
 				const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
 
-				this.messages.add({
+				this.messageService.add({
 					severity: 'error',
 					summary: 'Logout Error',
 					detail: detail,

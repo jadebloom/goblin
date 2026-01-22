@@ -7,7 +7,7 @@ import { PasswordInput } from '@core/auth/components/password-input/password-inp
 import { LoginFormService } from '@core/auth/services/login-form.service';
 
 @Component({
-	selector: 'gb-auth-login-form',
+	selector: 'gb-login-form',
 	imports: [ReactiveFormsModule, ButtonModule, MessageModule, EmailInput, PasswordInput],
 	templateUrl: './login-form.html',
 	providers: [LoginFormService],

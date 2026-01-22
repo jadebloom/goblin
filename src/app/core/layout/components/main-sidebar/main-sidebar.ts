@@ -5,12 +5,12 @@ import { ScreenService } from '@core/layout/services/screen.service';
 import { DrawerModule } from 'primeng/drawer';
 
 @Component({
-	selector: 'gb-layout-main-sidebar',
+	selector: 'gb-main-sidebar',
 	templateUrl: './main-sidebar.html',
 	styleUrl: './main-sidebar.scss',
 	imports: [DrawerModule, MainMenu],
 })
 export class MainSidebar {
-	readonly mainMenu = inject(MainMenuService);
-	readonly screen = inject(ScreenService);
+	protected readonly mainMenuService = inject(MainMenuService);
+	protected readonly screenService = inject(ScreenService);
 }

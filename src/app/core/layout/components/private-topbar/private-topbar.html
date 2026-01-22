@@ -7,7 +7,7 @@
 			[rounded]="true"
 			[text]="true"
 			autofocus="true"
-			(click)="mainMenu.toggle()"
+			(click)="mainMenuService.toggle()"
 			aria-label="Open the main menu"
 		/>
 
@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="flex items-center gap-2">
-		<gb-theme-dark-mode-toggle />
+		<gb-dark-mode-toggle />
 
 		<div>
 			<p-button icon="pi pi-ellipsis-v" variant="text" rounded="true" (click)="op.toggle($event)" />

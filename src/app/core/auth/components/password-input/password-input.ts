@@ -9,7 +9,7 @@ import { RequiredStar } from '@toolkit/components/required-star/required-star';
 import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.directive';
 
 @Component({
-	selector: 'gb-auth-password-input',
+	selector: 'gb-password-input',
 	imports: [
 		ReactiveFormsModule,
 		InputTextModule,
