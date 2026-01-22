@@ -7,7 +7,7 @@ import { EmailInput } from '@core/auth/components/email-input/email-input';
 import { PasswordInput } from '@core/auth/components/password-input/password-input';
 
 @Component({
-	selector: 'gb-auth-registration-form',
+	selector: 'gb-registration-form',
 	imports: [ReactiveFormsModule, ButtonModule, MessageModule, EmailInput, PasswordInput],
 	templateUrl: './registration-form.html',
 	providers: [RegistrationFormService],

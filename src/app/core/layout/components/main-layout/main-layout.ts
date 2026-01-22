@@ -12,7 +12,7 @@ import { Preloading } from '@core/layout/components/preloading/preloading';
 import { MainSidebar } from '@core/layout/components/main-sidebar/main-sidebar';
 
 @Component({
-	selector: 'gb-layout-main-layout',
+	selector: 'gb-main-layout',
 	templateUrl: './main-layout.html',
 	imports: [
 		RouterOutlet,
@@ -25,11 +25,15 @@ import { MainSidebar } from '@core/layout/components/main-sidebar/main-sidebar';
 	],
 })
 export class MainLayout {
-	readonly auth = inject(AuthService);
-	readonly startup = inject(StartupService);
-	readonly mainMenu = inject(MainMenuService);
+	protected readonly authService = inject(AuthService);
+	protected readonly startupService = inject(StartupService);
+	protected readonly mainMenuService = inject(MainMenuService);
 
-	readonly isAuthenticated = computed(() => this.auth.authStatus() == AuthStatus.AUTHENTICATED);
+	readonly isAuthenticated = computed(
+		() => this.authService.authStatus() == AuthStatus.AUTHENTICATED,
+	);
 
-	readonly isUnauthenticated = computed(() => this.auth.authStatus() == AuthStatus.UNAUTHENTICATED);
+	readonly isUnauthenticated = computed(
+		() => this.authService.authStatus() == AuthStatus.UNAUTHENTICATED,
+	);
 }

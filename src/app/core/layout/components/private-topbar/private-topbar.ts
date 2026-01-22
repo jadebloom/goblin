@@ -10,17 +10,17 @@ import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { MainMenuService } from '@core/layout/services/main-menu.service';
 
 @Component({
-	selector: 'gb-layout-private-topbar',
+	selector: 'gb-private-topbar',
 	templateUrl: './private-topbar.html',
 	imports: [ButtonModule, DrawerModule, PopoverModule, DarkModeToggle],
 })
 export class PrivateTopbar {
-	readonly mainMenu = inject(MainMenuService);
-	private readonly auth = inject(AuthService);
+	protected readonly mainMenuService = inject(MainMenuService);
+	private readonly authService = inject(AuthService);
 	private readonly router = inject(Router);
-	private readonly messages = inject(MessageService);
+	private readonly messageService = inject(MessageService);
 
-	readonly popoverItems = [
+	protected readonly popoverItems = [
 		{
 			label: 'Account',
 			icon: 'pi pi-user',
@@ -29,19 +29,19 @@ export class PrivateTopbar {
 		{
 			label: 'Logout',
 			icon: 'pi pi-sign-out',
-			onClick: this.logout,
+			onClick: () => this.logout(),
 		},
 	];
 
-	logout() {
-		this.auth.logout().subscribe({
+	protected logout() {
+		this.authService.logout().subscribe({
 			next: () => {
 				this.router.navigate(['/registration']);
 			},
 			error: (err) => {
 				const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
 
-				this.messages.add({
+				this.messageService.add({
 					severity: 'error',
 					summary: 'Logout Error',
 					detail: detail,

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 
 @Component({
-	selector: 'gb-layout-main-footer',
+	selector: 'gb-main-footer',
 	templateUrl: './main-footer.html',
 	imports: [DividerModule],
 })

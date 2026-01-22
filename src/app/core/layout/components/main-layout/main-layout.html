@@ -1,34 +1,34 @@
-@if (startup.isStartupFinished()) {
-	<gb-layout-global-toasts />
+@if (startupService.isStartupFinished()) {
+	<gb-global-toasts />
 
 	@if (isAuthenticated()) {
 		<div class="min-h-screen">
-			<gb-layout-private-topbar />
+			<gb-private-topbar />
 
-			<gb-layout-main-sidebar />
+			<gb-main-sidebar />
 
 			<!-- layout-main-container -->
 			<div
 				class="flex flex-col justify-between ml-0 pt-20 pr-8 pb-0 pl-8 transition-[margin-left] duration-200 min-screen"
-				[class]="mainMenu.isMainMenuOpened() ? 'lg:ml-76' : 'lg:ml-0'"
+				[class]="mainMenuService.isMainMenuOpened() ? 'lg:ml-76' : 'lg:ml-0'"
 			>
 				<!-- layout-main -->
 				<div class="flex-1 pb-6">
 					<router-outlet></router-outlet>
 
-					<gb-layout-main-footer />
+					<gb-main-footer />
 				</div>
 
-				<div [class.layout-mask]="mainMenu.isMainMenuOpened()"></div>
+				<div [class.layout-mask]="mainMenuService.isMainMenuOpened()"></div>
 			</div>
 		</div>
 	} @else if (isUnauthenticated()) {
 		<div class="flex flex-col min-h-screen">
-			<gb-layout-public-topbar />
+			<gb-public-topbar />
 
 			<router-outlet></router-outlet>
 		</div>
 	}
 } @else {
-	<gb-layout-preloading />
+	<gb-preloading />
 }

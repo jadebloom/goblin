@@ -1,8 +1,7 @@
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { catchError, finalize, map, Observable, of, throwError } from 'rxjs';
-
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { AuthResponse } from '@core/auth/models/auth-response.model';
 import { AuthStatus } from '@core/auth/models/auth-status.model';
 import { RegistrationPayload } from '@core/auth/models/registration-payload.model';
@@ -16,10 +15,7 @@ export class AuthService {
 	private readonly _authStatus = signal(AuthStatus.UNAUTHENTICATED);
 	readonly authStatus = this._authStatus.asReadonly();
 
-	readonly isRegistrationLoading = signal(false);
-	readonly isLoginLoading = signal(false);
-
-	private setAuthenticated(token?: string) {
+	setAuthenticated(token?: string) {
 		if (token && isPlatformBrowser(this.platformId)) {
 			localStorage.setItem('access_token', token);
 		}
@@ -27,7 +23,7 @@ export class AuthService {
 		this._authStatus.set(AuthStatus.AUTHENTICATED);
 	}
 
-	private setUnauthenticated() {
+	setUnauthenticated() {
 		if (isPlatformBrowser(this.platformId)) {
 			localStorage.removeItem('access_token');
 		}
@@ -37,7 +33,6 @@ export class AuthService {
 
 	register(form: RegistrationPayload): Observable<AuthResponse> {
 		this._authStatus.set(AuthStatus.LOADING);
-		this.isRegistrationLoading.set(true);
 
 		return this.http
 			.post<AuthResponse>('/api/v1/authentication/registration', form, {
@@ -58,13 +53,11 @@ export class AuthService {
 
 					return throwError(() => err);
 				}),
-				finalize(() => this.isRegistrationLoading.set(false)),
 			);
 	}
 
 	login(form: LoginPayload): Observable<AuthResponse> {
 		this._authStatus.set(AuthStatus.LOADING);
-		this.isLoginLoading.set(true);
 
 		return this.http
 			.post<AuthResponse>('/api/v1/authentication/login', form, {
@@ -85,7 +78,6 @@ export class AuthService {
 
 					return throwError(() => err);
 				}),
-				finalize(() => this.isLoginLoading.set(false)),
 			);
 	}
 

@@ -1,6 +1,7 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { AuthService } from '@core/auth/services/auth.service';
@@ -8,9 +9,9 @@ import { RegistrationPayload } from '@core/auth/models/registration-payload.mode
 
 @Injectable()
 export class RegistrationFormService {
-	readonly auth = inject(AuthService);
+	readonly authService = inject(AuthService);
 	private readonly router = inject(Router);
-	private readonly messages = inject(MessageService);
+	private readonly messageService = inject(MessageService);
 
 	readonly form = new FormGroup(
 		{
@@ -44,6 +45,8 @@ export class RegistrationFormService {
 		{ validators: passwordsMatchValidator },
 	);
 
+	readonly isRegistrationLoading = signal(false);
+
 	register() {
 		if (this.form.invalid) {
 			this.form.markAllAsTouched();
@@ -51,19 +54,26 @@ export class RegistrationFormService {
 			return;
 		}
 
+		if (this.isRegistrationLoading()) return;
+
+		this.isRegistrationLoading.set(true);
+
 		const body: RegistrationPayload = this.form.getRawValue();
 
-		this.auth
+		this.authService
 			.register({
 				email: body.email,
 				password: body.password,
 			})
+			.pipe(finalize(() => this.isRegistrationLoading.set(false)))
 			.subscribe({
-				next: () => this.router.navigate(['/']),
+				next: () => {
+					this.router.navigate(['/']);
+				},
 				error: (err) => {
 					const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;
 
-					this.messages.add({
+					this.messageService.add({
 						severity: 'error',
 						summary: 'Failed to register',
 						detail: detail,

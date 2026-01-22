@@ -5,8 +5,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class StartupService {
-	private readonly theme = inject(ThemeService);
-	private readonly auth = inject(AuthService);
+	private readonly themeService = inject(ThemeService);
+	private readonly authService = inject(AuthService);
 	private readonly platformId = inject(PLATFORM_ID);
 
 	private readonly _isStartupFinished = signal(false);
@@ -14,9 +14,9 @@ export class StartupService {
 
 	startUp() {
 		if (isPlatformBrowser(this.platformId)) {
-			this.theme.loadTheme();
+			this.themeService.loadTheme();
 
-			this.auth.refresh().subscribe({
+			this.authService.refresh().subscribe({
 				next: () => this._isStartupFinished.set(true),
 				error: () => this._isStartupFinished.set(true),
 			});

@@ -1,12 +1,12 @@
 import { isPlatformServer } from '@angular/common';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { AuthService } from '@core/auth/services/auth.service';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { AuthService } from '@core/auth/services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-	private readonly auth = inject(AuthService);
+	private readonly authService = inject(AuthService);
 	private readonly platformId = inject(PLATFORM_ID);
 
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
 		return next.handle(authReq).pipe(
 			catchError((err) => {
 				if (err.status === 401) {
-					return this.auth.refresh().pipe(
+					return this.authService.refresh().pipe(
 						switchMap(() => {
 							const newAccessToken = localStorage.getItem('access_token');
 

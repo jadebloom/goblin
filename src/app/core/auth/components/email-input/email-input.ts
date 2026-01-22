@@ -6,7 +6,7 @@ import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.dire
 import { RequiredStar } from '@toolkit/components/required-star/required-star';
 
 @Component({
-	selector: 'gb-auth-email-input',
+	selector: 'gb-email-input',
 	imports: [
 		ReactiveFormsModule,
 		InputTextModule,
