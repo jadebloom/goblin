@@ -38,13 +38,13 @@ export class MainMenu {
 			],
 		},
 		{
-			label: 'Currencies',
+			label: 'Expense Categories',
 			items: [
 				{
-					label: 'View Currencies',
-					icon: 'pi pi-dollar',
-					route: '/currencies',
-					onClick: () => this.router.navigate(['/currencies']),
+					label: 'View Categories',
+					icon: 'pi pi-list',
+					route: '/expenses/categories',
+					onClick: () => this.router.navigate(['/expenses', 'categories']),
 				},
 			],
 		},
@@ -79,7 +79,7 @@ export class MainMenu {
 	logout() {
 		this.auth.logout().subscribe({
 			next: () => {
-				this.router.navigate(['/registration']);
+				this.router.navigate(['/auth/registration']);
 			},
 			error: (err) => {
 				const detail = err?.error?.detail ?? DEFAULT_ERROR_MESSAGE;

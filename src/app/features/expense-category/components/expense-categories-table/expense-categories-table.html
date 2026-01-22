@@ -1,0 +1,79 @@
+<p-confirm-dialog />
+
+@let categories = expenseCategoriesTableService.expenseCategories();
+
+@if (expenseCategoriesTableService.areExpenseCategoriesLoading()) {
+	<p-progress-spinner class="flex justify-center" aria-label="Expense categories are loading..." />
+} @else if (categories == null) {
+	<gb-toolkit-refreshable-empty-content
+		message="Unfortunately, expense categories could not be found"
+	/>
+} @else {
+	<div class="card">
+		<p-table
+			[value]="categories"
+			paginator
+			[rows]="expenseCategoriesTableService.pagination().size"
+			[first]="expenseCategoriesTableService.pagination().number"
+			[rowsPerPageOptions]="[5, 10, 20, 50]"
+			showCurrentPageReport
+			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} currencies"
+			stripedRows
+			[tableStyle]="{ 'min-width': '50rem' }"
+			(onPage)="expenseCategoriesTableService.pageChange($event)"
+		>
+			<ng-template #header>
+				<tr>
+					<th style="width: 15%">ID</th>
+					<th style="width: 30%">Name</th>
+					<th style="width: 20%">Color</th>
+					<th style="width: 25%">Created At</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</ng-template>
+
+			<ng-template #body let-expenseCategory>
+				<tr
+					class="cursor-pointer"
+					(click)="router.navigate(['/expenses/categories', expenseCategory.id])"
+				>
+					<td>{{ expenseCategory.id ?? '-' }}</td>
+					<td>{{ expenseCategory.name ?? '-' }}</td>
+					<td>
+						@if (expenseCategory.hex_color_code) {
+							<span
+								class="block rounded-full size-4"
+								[style]="{ backgroundColor: expenseCategory.hex_color_code }"
+							></span>
+						} @else {
+							-
+						}
+					</td>
+					<td>{{ (expenseCategory.created_at | date: 'long') ?? '-' }}</td>
+					<td>
+						<p-buttongroup>
+							<p-button
+								label="Update"
+								text
+								size="small"
+								[disabled]="typeof expenseCategory.id != 'number'"
+								icon="pi pi-check"
+								(onClick)="openExpenseCategoryUpdateDialog($event, expenseCategory)"
+							/>
+
+							<p-button
+								label="Delete"
+								text
+								severity="danger"
+								size="small"
+								[disabled]="typeof expenseCategory.id != 'number'"
+								icon="pi pi-trash"
+								(onClick)="openExpenseCategoryDeletionDialog($event, expenseCategory)"
+							/>
+						</p-buttongroup>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+}

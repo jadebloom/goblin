@@ -1,0 +1,31 @@
+<div class="sm:flex sm:items-center gap-2 grid grid-cols-1">
+	<p-button
+		label="View all"
+		variant="outlined"
+		size="small"
+		severity="secondary"
+		icon="pi pi-list"
+		styleClass="w-full"
+		(onClick)="navigateToExpenseCategoriesPage()"
+	/>
+
+	<p-button
+		label="Delete the expense category"
+		variant="outlined"
+		size="small"
+		severity="danger"
+		icon="pi pi-trash"
+		styleClass="w-full"
+		(onClick)="openExpenseCategoryDeletionDialog($event)"
+	/>
+
+	<p-button
+		label="Delete expenses that use the category"
+		variant="outlined"
+		size="small"
+		severity="danger"
+		icon="pi pi-trash"
+		styleClass="w-full"
+		(onClick)="openRelatedExpensesDeletionDialog($event)"
+	/>
+</div>
