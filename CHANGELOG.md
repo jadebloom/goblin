@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 ### Added
+- For new features.
+### Changed
+- For changes in existing functionality.
+### Deprecated
+- For soon-to-be removed features.
+### Removed
+- For now removed features.
+### Fixed
+- For any bug fixes.
+### Security
+- In case of vulnerabilities.
+
+## [1.0.0] - 2026-01-24
+### Added
 - Added the main layout.
 - Added the not-found page.
 - Added registration page with registration logic.
