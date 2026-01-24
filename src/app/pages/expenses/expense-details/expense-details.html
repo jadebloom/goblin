@@ -1,0 +1,30 @@
+@if (isExpenseLoading()) {
+	<p-progress-spinner class="flex justify-center" aria-label="Expense is loading..." />
+} @else {
+	@let init = expense();
+
+	@if (init == null) {
+		<section>
+			<div class="flex justify-between items-center gap-4">
+				<p-message severity="error" icon="pi pi-times-circle">
+					Unfortunately, the expense wasn't found.
+				</p-message>
+
+				<p-button
+					label="Refresh"
+					severity="secondary"
+					icon="pi pi-refresh"
+					(onClick)="loadExpense()"
+				/>
+			</div>
+		</section>
+	} @else {
+		<section class="flex flex-col gap-4">
+			<gb-expense-toolbar [expense]="init" class="card" />
+
+			<div class="card">
+				<gb-update-expense-form [expense]="init" />
+			</div>
+		</section>
+	}
+}

@@ -1,0 +1,9 @@
+<div class="flex flex-col gap-2">
+	<label for="currencyCode" class="font-medium text-sm">
+		<span>Currency </span>
+
+		<gb-required-star />
+	</label>
+
+	<gb-currency-code-input inputId="currencyCode" [fc]="fc()" [required]="true" />
+</div>

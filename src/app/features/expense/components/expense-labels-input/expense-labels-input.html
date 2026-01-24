@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-2">
+	<div class="flex items-center gap-2">
+		<label for="labels" class="font-medium text-sm">Labels</label>
+
+		<p-button
+			label="Remove all"
+			severity="secondary"
+			size="small"
+			text
+			icon="pi pi-times"
+			(onClick)="removeAll()"
+		/>
+	</div>
+
+	@if (fc().getRawValue().length) {
+		<div class="flex flex-wrap items-center mb-2">
+			@for (label of fc().getRawValue(); track $index) {
+				<p-chip [label]="label" removable="true" (onRemove)="removeLabel(label)" />
+			}
+		</div>
+	}
+
+	<input
+		[(ngModel)]="label"
+		id="labels"
+		type="text"
+		minlength="1"
+		maxlength="16"
+		placeholder="Ex: Essential"
+		pInputText
+		(keydown)="addLabel($event)"
+	/>
+
+	@if ((fc().touched || fc().dirty) && fc().hasError('maxlength')) {
+		<p-message severity="error" size="small" variant="simple">
+			At most 16 labels can be added.
+		</p-message>
+	}
+</div>

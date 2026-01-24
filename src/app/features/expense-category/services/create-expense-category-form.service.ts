@@ -5,12 +5,12 @@ import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { CreateExpenseCategoryService } from '@features/expense-category/services/create-expense-category.service';
-import { ExpenseCategoriesTableService } from '@features/expense-category/services/expense-categories-table.service';
+import { ExpenseCategoriesPaginatedService } from '@features/expense-category/services/expense-categories-paginated.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CreateExpenseCategoryFormService {
 	private readonly createExpenseCategoryService = inject(CreateExpenseCategoryService);
-	private readonly expenseCategoriesTableService = inject(ExpenseCategoriesTableService);
+	private readonly expenseCategoriesPaginatedService = inject(ExpenseCategoriesPaginatedService);
 	private readonly messageService = inject(MessageService);
 	private readonly destroyRef = inject(DestroyRef);
 
@@ -20,9 +20,10 @@ export class CreateExpenseCategoryFormService {
 			validators: [Validators.required, Validators.maxLength(64)],
 		}),
 		description: new FormControl('', {
+			nonNullable: true,
 			validators: [Validators.maxLength(256)],
 		}),
-		hexColorCode: new FormControl('', {}),
+		hexColorCode: new FormControl('#FF0000', { nonNullable: true }),
 	});
 
 	readonly isCreatingExpenseCategory = signal(false);
@@ -52,7 +53,7 @@ export class CreateExpenseCategoryFormService {
 			)
 			.subscribe({
 				next: (res) => {
-					this.expenseCategoriesTableService.loadExpenseCategoriesInTable();
+					this.expenseCategoriesPaginatedService.loadExpenseCategories();
 
 					this.form.reset();
 

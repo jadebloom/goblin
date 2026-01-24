@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { DeleteExpenseCategoryService } from '@features/expense-category/services/delete-expense-category.service';
-import { ExpenseCategoriesTableService } from '@features/expense-category/services/expense-categories-table.service';
+import { ExpenseCategoriesPaginatedService } from '@features/expense-category/services/expense-categories-paginated.service';
 import { ExpenseCategory } from '@features/expense-category/models/expense-category';
 
 @Component({
@@ -17,7 +17,7 @@ import { ExpenseCategory } from '@features/expense-category/models/expense-categ
 })
 export class DeleteExpenseCategoryConfirm {
 	private readonly deleteExpenseCategoryService = inject(DeleteExpenseCategoryService);
-	private readonly expenseCategoriesTableService = inject(ExpenseCategoriesTableService);
+	private readonly expenseCategoriesPaginatedService = inject(ExpenseCategoriesPaginatedService);
 	private readonly router = inject(Router);
 	private readonly messageService = inject(MessageService);
 	private readonly dynamicDialogRef = inject(DynamicDialogRef);
@@ -28,7 +28,7 @@ export class DeleteExpenseCategoryConfirm {
 	readonly isExpenseCategoryDeleting = signal(false);
 	readonly isExpenseCategoryDeleted = signal(false);
 
-	protected deleteCurrency() {
+	protected deleteExpenseCategory() {
 		if (this.isExpenseCategoryDeleting() || this.isExpenseCategoryDeleted()) return;
 
 		this.isExpenseCategoryDeleting.set(true);
@@ -47,7 +47,7 @@ export class DeleteExpenseCategoryConfirm {
 				next: () => {
 					this.isExpenseCategoryDeleted.set(true);
 
-					this.expenseCategoriesTableService.loadExpenseCategoriesInTable();
+					this.expenseCategoriesPaginatedService.loadExpenseCategories();
 
 					this.messageService.add({
 						severity: 'success',

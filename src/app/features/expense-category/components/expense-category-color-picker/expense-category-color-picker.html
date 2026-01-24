@@ -1,0 +1,10 @@
+<div class="flex gap-2 transition-all" [class]="isColorPickerExpanded() ? 'pb-24' : 'pb-0'">
+	<label for="hexColorCode" class="font-medium text-sm">Associated color</label>
+
+	<p-colorpicker
+		[formControl]="fc()"
+		inputId="hexColorCode"
+		(onShow)="isColorPickerExpanded.set(true)"
+		(onHide)="isColorPickerExpanded.set(false)"
+	/>
+</div>

@@ -8,11 +8,10 @@ import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ExpenseCategoriesTableService } from '@features/expense-category/services/expense-categories-table.service';
+import { ExpenseCategoriesPaginatedService } from '@features/expense-category/services/expense-categories-paginated.service';
 import { UpdateExpenseCategoryForm } from '@features/expense-category/components/update-expense-category-form/update-expense-category-form';
 import { DeleteExpenseCategoryConfirm } from '@features/expense-category/components/delete-expense-category-confirm/delete-expense-category-confirm';
 import { ExpenseCategory } from '@features/expense-category/models/expense-category';
-import { RefreshableEmptyContent } from '@toolkit/components/refreshable-empty-content/refreshable-empty-content';
 
 @Component({
 	selector: 'gb-expense-categories-table',
@@ -24,19 +23,18 @@ import { RefreshableEmptyContent } from '@toolkit/components/refreshable-empty-c
 		ButtonGroupModule,
 		ProgressSpinnerModule,
 		DatePipe,
-		RefreshableEmptyContent,
 	],
 	providers: [ConfirmationService, DialogService],
 })
 export class ExpenseCategoriesTable implements OnInit {
-	protected readonly expenseCategoriesTableService = inject(ExpenseCategoriesTableService);
+	protected readonly expenseCategoriesPaginatedService = inject(ExpenseCategoriesPaginatedService);
 	protected readonly router = inject(Router);
 	private readonly dialogService = inject(DialogService);
 
 	private dialogRef?: DynamicDialogRef | null;
 
 	ngOnInit(): void {
-		this.expenseCategoriesTableService.loadExpenseCategoriesInTable();
+		this.expenseCategoriesPaginatedService.loadExpenseCategories();
 	}
 
 	protected openExpenseCategoryUpdateDialog(event: Event, expenseCategory: ExpenseCategory) {

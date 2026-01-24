@@ -1,0 +1,73 @@
+<div class="flex flex-col gap-2">
+	<div class="flex items-center gap-2">
+		<label for="expenseCategory" class="font-medium text-sm">
+			<span>Expense category</span>
+
+			<gb-required-star />
+		</label>
+
+		<p-button
+			label="Refresh"
+			icon="pi pi-refresh"
+			size="small"
+			severity="secondary"
+			text
+			(onClick)="expenseCategoriesPaginatedService.loadExpenseCategories()"
+		/>
+	</div>
+
+	<p-select
+		[formControl]="fc()"
+		[options]="expenseCategoriesPaginatedService.expenseCategories()"
+		inputId="expenseCategory"
+		optionLabel="name"
+		optionValue="id"
+		required
+		[loading]="expenseCategoriesPaginatedService.areExpenseCategoriesLoading()"
+		placeholder="Ex: Entertainment"
+		filter="true"
+		filterBy="name"
+		filterPlaceholder="Ex: Entertainment"
+		emptyFilterMessage="No results"
+		fluid
+		scrollHeight="8rem"
+	>
+		<ng-template #item let-category>
+			<div class="flex items-center gap-2">
+				@if (category.hex_color_code) {
+					<div
+						class="rounded-full size-4"
+						[style]="{ backgroundColor: category.hex_color_code }"
+						aria-label="Category related color"
+					></div>
+				}
+
+				<p>{{ category.name }}</p>
+			</div>
+		</ng-template>
+
+		<ng-template #selectedItem let-category>
+			@if (category == null) {
+				Expense category is not selected.
+			} @else {
+				<div class="flex items-center gap-2">
+					@if (category.hex_color_code) {
+						<div
+							class="rounded-full size-4"
+							[style]="{ backgroundColor: category.hex_color_code }"
+							aria-label="Category related color"
+						></div>
+					}
+
+					<p>{{ category.name }}</p>
+				</div>
+			}
+		</ng-template>
+	</p-select>
+
+	@if ((fc().touched || fc().dirty) && fc().hasError('required')) {
+		<p-message severity="error" size="small" variant="simple">
+			Expense category is required.
+		</p-message>
+	}
+</div>

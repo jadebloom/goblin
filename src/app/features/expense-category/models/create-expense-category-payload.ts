@@ -1,5 +1,5 @@
 export interface CreateExpenseCategoryPayload {
 	name: string;
-	description: string | null;
-	hex_color_code: string | null;
+	description?: string | null;
+	hex_color_code?: string | null;
 }

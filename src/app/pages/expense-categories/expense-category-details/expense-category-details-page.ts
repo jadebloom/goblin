@@ -14,7 +14,7 @@ import { ExpenseCategory } from '@features/expense-category/models/expense-categ
 
 @Component({
 	selector: 'gb-expense-category-details-page',
-	templateUrl: './expense-category-details.html',
+	templateUrl: './expense-category-details-page.html',
 	imports: [
 		ProgressSpinnerModule,
 		MessageModule,
@@ -65,7 +65,7 @@ export class ExpenseCategoriesDetailsPage implements OnInit {
 
 							this.messageService.add({
 								severity: 'error',
-								summary: `Failed to load the expense category wiht ID ${id}`,
+								summary: `Failed to load the expense category with ID ${id}`,
 								detail: detail,
 								key: 'main',
 							});

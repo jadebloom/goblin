@@ -6,7 +6,6 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
 import { RequiredStar } from '@toolkit/components/required-star/required-star';
-import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.directive';
 
 @Component({
 	selector: 'gb-password-input',
@@ -17,7 +16,6 @@ import { SelectOnFocusDirective } from '@toolkit/directives/select-on-focus.dire
 		InputGroupAddonModule,
 		ButtonModule,
 		MessageModule,
-		SelectOnFocusDirective,
 		RequiredStar,
 	],
 	templateUrl: './password-input.html',

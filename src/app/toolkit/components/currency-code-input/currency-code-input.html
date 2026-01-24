@@ -1,0 +1,41 @@
+<p-select
+	[formControl]="fc()"
+	[options]="options"
+	[inputId]="inputId()"
+	optionLabel="name"
+	optionValue="name"
+	[required]="required()"
+	placeholder="Ex: USD"
+	filter="true"
+	filterBy="name"
+	filterPlaceholder="USD"
+	emptyFilterMessage="No results"
+	fluid
+	scrollHeight="8rem"
+>
+	<ng-template #item let-country>
+		<div class="flex items-center gap-2">
+			<img
+				[src]="'https://flagcdn.com/w20/' + country.code + '.png'"
+				[srcset]="'https://flagcdn.com/w40/' + country.code + '.png 2x'"
+				width="20"
+				[alt]="'Flag ' + country.code"
+			/>
+
+			<p>{{ country.name }}</p>
+		</div>
+	</ng-template>
+
+	<ng-template #selectedItem let-country>
+		<div class="flex items-center gap-2">
+			<img
+				[src]="'https://flagcdn.com/w20/' + country.code + '.png'"
+				[srcset]="'https://flagcdn.com/w40/' + country.code + '.png 2x'"
+				width="20"
+				[alt]="'Flag ' + country.code"
+			/>
+
+			<p>{{ country.name }}</p>
+		</div>
+	</ng-template>
+</p-select>

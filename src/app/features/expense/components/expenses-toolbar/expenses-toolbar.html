@@ -1,0 +1,30 @@
+<p-toolbar class="mb-4">
+	<ng-template #start>
+		<div class="flex items-center gap-2">
+			<p-button
+				label="New"
+				severity="secondary"
+				size="small"
+				icon="pi pi-plus"
+				(onClick)="openExpenseCreationDialog()"
+			/>
+
+			<p-button
+				label="Refresh"
+				severity="secondary"
+				size="small"
+				icon="pi pi-refresh"
+				(onClick)="paginatedExpensesService.loadExpenses()"
+			/>
+
+			<p-button
+				label="Delete all"
+				variant="outlined"
+				size="small"
+				severity="danger"
+				icon="pi pi-trash"
+				(onClick)="openAllExpensesDeletionDialog()"
+			/>
+		</div>
+	</ng-template>
+</p-toolbar>

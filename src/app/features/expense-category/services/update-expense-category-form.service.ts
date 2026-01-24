@@ -5,13 +5,13 @@ import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { UpdateExpenseCategoryService } from '@features/expense-category/services/update-expense-category.service';
-import { ExpenseCategoriesTableService } from '@features/expense-category/services/expense-categories-table.service';
+import { ExpenseCategoriesPaginatedService } from '@features/expense-category/services/expense-categories-paginated.service';
 import { ExpenseCategory } from '../models/expense-category';
 
 @Injectable({ providedIn: 'root' })
 export class UpdateExpenseCategoryFormService {
 	private readonly updateExpenseCategoryService = inject(UpdateExpenseCategoryService);
-	private readonly expenseCategoriesTableService = inject(ExpenseCategoriesTableService);
+	private readonly expenseCategoriesPaginatedService = inject(ExpenseCategoriesPaginatedService);
 	private readonly messageService = inject(MessageService);
 	private readonly destroyRef = inject(DestroyRef);
 
@@ -67,7 +67,7 @@ export class UpdateExpenseCategoryFormService {
 			)
 			.subscribe({
 				next: () => {
-					this.expenseCategoriesTableService.loadExpenseCategoriesInTable();
+					this.expenseCategoriesPaginatedService.loadExpenseCategories();
 
 					this.messageService.add({
 						severity: 'success',
