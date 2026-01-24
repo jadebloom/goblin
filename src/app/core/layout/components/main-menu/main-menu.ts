@@ -38,6 +38,17 @@ export class MainMenu {
 			],
 		},
 		{
+			label: 'Expenses',
+			items: [
+				{
+					label: 'View Expenses',
+					icon: 'pi pi-list',
+					route: '/expenses',
+					onClick: () => this.router.navigate(['/expenses']),
+				},
+			],
+		},
+		{
 			label: 'Expense Categories',
 			items: [
 				{

@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DEFAULT_ERROR_MESSAGE } from '@core/constants';
 import { DeleteAllExpenseCategoriesService } from '@features/expense-category/services/delete-all-expense-categories.service';
-import { ExpenseCategoriesTableService } from '@features/expense-category/services/expense-categories-table.service';
+import { ExpenseCategoriesPaginatedService } from '@features/expense-category/services/expense-categories-paginated.service';
 
 @Component({
 	selector: 'gb-delete-all-expense-categories-confirm',
@@ -15,7 +15,7 @@ import { ExpenseCategoriesTableService } from '@features/expense-category/servic
 })
 export class DeleteAllExpenseCategoriesConfirm {
 	private readonly deleteAllExpenseCategoriesService = inject(DeleteAllExpenseCategoriesService);
-	private readonly expenseCategoriesTableService = inject(ExpenseCategoriesTableService);
+	private readonly expenseCategoriesPaginatedService = inject(ExpenseCategoriesPaginatedService);
 	private readonly messageService = inject(MessageService);
 	private readonly dynamicDialogRef = inject(DynamicDialogRef);
 	private readonly destroyRef = inject(DestroyRef);
@@ -35,7 +35,7 @@ export class DeleteAllExpenseCategoriesConfirm {
 			)
 			.subscribe({
 				next: () => {
-					this.expenseCategoriesTableService.loadExpenseCategoriesInTable();
+					this.expenseCategoriesPaginatedService.loadExpenseCategories();
 
 					this.messageService.add({
 						severity: 'success',

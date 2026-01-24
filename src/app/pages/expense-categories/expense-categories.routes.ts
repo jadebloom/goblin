@@ -14,7 +14,7 @@ export default [
 				title: 'Goblin. Your expense category',
 				path: ':id',
 				loadComponent: () =>
-					import('./expense-category-details/expense-category-details').then(
+					import('./expense-category-details/expense-category-details-page').then(
 						(m) => m.ExpenseCategoriesDetailsPage,
 					),
 			},

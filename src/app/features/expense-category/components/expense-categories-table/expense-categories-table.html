@@ -1,26 +1,22 @@
 <p-confirm-dialog />
 
-@let categories = expenseCategoriesTableService.expenseCategories();
+@let categories = expenseCategoriesPaginatedService.expenseCategories();
 
-@if (expenseCategoriesTableService.areExpenseCategoriesLoading()) {
+@if (expenseCategoriesPaginatedService.areExpenseCategoriesLoading()) {
 	<p-progress-spinner class="flex justify-center" aria-label="Expense categories are loading..." />
-} @else if (categories == null) {
-	<gb-toolkit-refreshable-empty-content
-		message="Unfortunately, expense categories could not be found"
-	/>
 } @else {
 	<div class="card">
 		<p-table
-			[value]="categories"
+			[value]="categories ?? []"
 			paginator
-			[rows]="expenseCategoriesTableService.pagination().size"
-			[first]="expenseCategoriesTableService.pagination().number"
+			[rows]="expenseCategoriesPaginatedService.pagination().size"
+			[first]="expenseCategoriesPaginatedService.pagination().number"
 			[rowsPerPageOptions]="[5, 10, 20, 50]"
 			showCurrentPageReport
-			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} currencies"
+			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} expense categories"
 			stripedRows
 			[tableStyle]="{ 'min-width': '50rem' }"
-			(onPage)="expenseCategoriesTableService.pageChange($event)"
+			(onPage)="expenseCategoriesPaginatedService.pageChange($event)"
 		>
 			<ng-template #header>
 				<tr>

@@ -2,8 +2,9 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CreateExpenseCategoryForm } from '../create-expense-category-form/create-expense-category-form';
-import { DeleteAllExpenseCategoriesConfirm } from '../delete-all-expense-categories-confirm/delete-all-expense-categories-confirm';
+import { ExpenseCategoriesPaginatedService } from '@features/expense-category/services/expense-categories-paginated.service';
+import { CreateExpenseCategoryForm } from '@features/expense-category/components/create-expense-category-form/create-expense-category-form';
+import { DeleteAllExpenseCategoriesConfirm } from '@features/expense-category/components/delete-all-expense-categories-confirm/delete-all-expense-categories-confirm';
 
 @Component({
 	selector: 'gb-expense-categories-toolbar',
@@ -12,6 +13,7 @@ import { DeleteAllExpenseCategoriesConfirm } from '../delete-all-expense-categor
 	providers: [DialogService],
 })
 export class ExpenseCategoriesToolbar implements OnDestroy {
+	protected readonly expenseCategoriesPaginatedService = inject(ExpenseCategoriesPaginatedService);
 	private readonly dialogService = inject(DialogService);
 
 	private dialogRef?: DynamicDialogRef | null;

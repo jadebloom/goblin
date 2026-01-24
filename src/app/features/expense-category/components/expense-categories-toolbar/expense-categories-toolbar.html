@@ -10,6 +10,14 @@
 			/>
 
 			<p-button
+				label="Refresh"
+				severity="secondary"
+				size="small"
+				icon="pi pi-refresh"
+				(onClick)="expenseCategoriesPaginatedService.loadExpenseCategories()"
+			/>
+
+			<p-button
 				label="Delete all"
 				variant="outlined"
 				size="small"

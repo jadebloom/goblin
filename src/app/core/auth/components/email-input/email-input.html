@@ -1,9 +1,9 @@
 <div class="flex flex-col gap-2">
-	<label for="email">Email <gb-toolkit-required-star /></label>
+	<label for="email">Email <gb-required-star /></label>
 
 	<input
 		[formControl]="email()"
-		gbSelectOnFocus
+		autofocus
 		pInputText
 		name="email"
 		type="email"

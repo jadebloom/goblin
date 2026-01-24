@@ -1,0 +1,65 @@
+<p-confirm-dialog />
+
+@let expenses = paginatedExpensesService.expenses();
+
+@if (paginatedExpensesService.areExpensesLoading()) {
+	<p-progress-spinner class="flex justify-center" aria-label="Expenses are loading..." />
+} @else {
+	<div class="card">
+		<p-table
+			[value]="expenses ?? []"
+			paginator
+			[rows]="paginatedExpensesService.pagination().size"
+			[first]="paginatedExpensesService.pagination().number"
+			[rowsPerPageOptions]="[5, 10, 20, 50]"
+			showCurrentPageReport
+			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} expenses"
+			stripedRows
+			[tableStyle]="{ 'min-width': '50rem' }"
+			(onPage)="paginatedExpensesService.pageChange($event)"
+		>
+			<ng-template #header>
+				<tr>
+					<th style="width: 15%">ID</th>
+					<th style="width: 20%">Name</th>
+					<th style="width: 15%">Amount</th>
+					<th style="width: 15%">Category</th>
+					<th style="width: 25%">Created At</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</ng-template>
+
+			<ng-template #body let-expense>
+				<tr class="cursor-pointer" (click)="router.navigate(['/expenses', expense.id])">
+					<td>{{ expense.id ?? '-' }}</td>
+					<td>{{ expense.name ?? '-' }}</td>
+					<td>{{ expense.amount ?? '-' }} {{ expense.currency_code ?? '' }}</td>
+					<td>{{ expense.expense_category_name ?? '-' }}</td>
+					<td>{{ (expense.created_at | date: 'long') ?? '-' }}</td>
+					<td>
+						<p-buttongroup>
+							<p-button
+								label="Update"
+								text
+								size="small"
+								[disabled]="typeof expense.id != 'number'"
+								icon="pi pi-check"
+								(onClick)="openExpenseUpdateDialog($event, expense)"
+							/>
+
+							<p-button
+								label="Delete"
+								text
+								severity="danger"
+								size="small"
+								[disabled]="typeof expense.id != 'number'"
+								icon="pi pi-trash"
+								(onClick)="openExpenseDeletionDialog($event, expense)"
+							/>
+						</p-buttongroup>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+}

@@ -1,0 +1,27 @@
+<form
+	[formGroup]="formService.form"
+	(ngSubmit)="formService.createExpense()"
+	class="gap-4 grid grid-cols-1 w-full"
+>
+	<gb-expense-name-input [fc]="getFc('name')" />
+
+	<gb-expense-currency-code [fc]="getFc('currencyCode')" />
+
+	<gb-expense-amount-input [fc]="getFc('amount')" [currencyCode]="getFc('currencyCode').value" />
+
+	<gb-expense-category-select [fc]="getFc('expenseCategoryId')" />
+
+	<gb-expense-description-textarea [fc]="getFc('description')" />
+
+	<gb-expense-labels-input [fc]="getFc('labels')" />
+
+	<p-button
+		label="Create"
+		type="submit"
+		icon="pi pi-plus"
+		rounded="true"
+		[loading]="formService.isCreatingExpense()"
+		[disabled]="formService.isCreatingExpense()"
+		fluid
+	/>
+</form>

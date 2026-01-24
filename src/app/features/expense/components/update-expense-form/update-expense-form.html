@@ -1,0 +1,39 @@
+<form
+	[formGroup]="formService.form"
+	(ngSubmit)="formService.updateExpense()"
+	class="gap-4 grid grid-cols-1 w-full"
+>
+	<div class="flex flex-col gap-2">
+		<label for="id" class="font-medium text-sm">ID </label>
+
+		<input pInputText [value]="expense().id" id="id" type="text" disabled="true" />
+	</div>
+
+	<gb-expense-name-input [fc]="getFc('name')" />
+
+	<gb-expense-currency-code [fc]="getFc('currencyCode')" />
+
+	<gb-expense-amount-input [fc]="getFc('amount')" [currencyCode]="getFc('currencyCode').value" />
+
+	<gb-expense-category-select [fc]="getFc('expenseCategoryId')" />
+
+	<gb-expense-description-textarea [fc]="getFc('description')" />
+
+	<gb-expense-labels-input [fc]="getFc('labels')" />
+
+	<div class="flex flex-col gap-2">
+		<label for="created_at" class="font-medium text-sm">Created at </label>
+
+		<input pInputText [value]="expense().created_at" id="created_at" type="text" disabled="true" />
+	</div>
+
+	<p-button
+		label="Update"
+		type="submit"
+		icon="pi pi-pencil"
+		rounded="true"
+		[loading]="formService.isUpdatingExpense()"
+		[disabled]="formService.isUpdatingExpense()"
+		fluid
+	/>
+</form>

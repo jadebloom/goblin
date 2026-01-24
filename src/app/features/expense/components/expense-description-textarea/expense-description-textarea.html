@@ -1,0 +1,22 @@
+<div class="flex flex-col gap-2">
+	<label for="description" class="font-medium text-sm">Description</label>
+
+	<textarea
+		[formControl]="fc()"
+		id="description"
+		type="text"
+		rows="5"
+		cols="30"
+		autoResize="true"
+		maxlength="256"
+		placeholder="Ex: Entertainment related expenses"
+		pTextarea
+		fluid
+	></textarea>
+
+	@if ((fc().touched || fc().dirty) && fc().hasError('maxlength')) {
+		<p-message severity="error" size="small" variant="simple">
+			Description should contain at most 256 characters.
+		</p-message>
+	}
+</div>
